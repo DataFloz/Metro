@@ -1,12 +1,15 @@
 from confluent_kafka import Consumer, KafkaError, KafkaException
+import config as cfg
 
 class kafkaConsumer:
     def __init__(self):
+        
         conf = {
-            'bootstrap.servers': "host1:9092,host2:9092",
-            'group.id': "test",
-            'auto.offset.reset': 'smallest'
-        }
+            'bootstrap.servers': cfg.kafka_config['bootstrap.servers'],
+            'group.id': cfg.kafka_config['group.id'],
+            'auto.offset.reset': cfg.kafka_config['auto.offset.reset']
+        }       
+
 
         self.consumer = Consumer(conf)
 

@@ -1,9 +1,10 @@
 from confluent_kafka import Producer
+import config as cfg
 
 class KafkaProducer():
     def __init__(self):
         conf = {
-            'bootstrap.servers': "host1:9092,host2:9092"
+            'bootstrap.servers': cfg.kafka_config['bootstrap.servers'] 
         }
 
         self.producer = Producer(conf)
