@@ -2,6 +2,7 @@ from confluent_kafka import Producer
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
 
 conf = {'bootstrap.servers': os.environ.get('bosstrap.servers') }
 
