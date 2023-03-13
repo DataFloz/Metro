@@ -3,9 +3,9 @@ from confluent_kafka import Consumer, KafkaError, KafkaException
 class kafkaConsumer:
     def __init__(self):
         conf = {
-        'bootstrap.servers': "host1:9092,host2:9092",
-        'group.id': "test",
-        'auto.offset.reset': 'smallest'
+            'bootstrap.servers': "host1:9092,host2:9092",
+            'group.id': "test",
+            'auto.offset.reset': 'smallest'
         }
 
         self.consumer = Consumer(conf)
