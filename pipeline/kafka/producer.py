@@ -1,7 +1,9 @@
 from confluent_kafka import Producer
+from dotenv import load_dotenv
+import os
 
 
-conf = {'bootstrap.servers': "host1:9092,host2:9092" }
+conf = {'bootstrap.servers': os.environ.get('bosstrap.servers') }
 
 producer = Producer(conf)
 

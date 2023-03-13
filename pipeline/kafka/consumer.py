@@ -1,9 +1,14 @@
 from confluent_kafka import Consumer, KafkaError, KafkaException
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 conf = {
-        'bootstrap.servers': "host1:9092,host2:9092",
-        'group.id': "test",
-        'auto.offset.reset': 'smallest'
+        'bootstrap.servers': os.environ.get('bootstrap.servers'),
+        'group.id': os.environ.get('group.id'),
+        'auto.offset.reset': os.environ.get('auto.offset.reset')
     }
 
 consumer = Consumer(conf)
