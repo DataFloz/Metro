@@ -1,10 +1,8 @@
 from confluent_kafka import Producer
-from dotenv import load_dotenv
-import os
+import config as cfg
 
-load_dotenv()
 
-conf = {'bootstrap.servers': os.environ.get('bosstrap.servers') }
+conf = {'bootstrap.servers': cfg.kafka_config['bootstrap.servers'] }
 
 producer = Producer(conf)
 
