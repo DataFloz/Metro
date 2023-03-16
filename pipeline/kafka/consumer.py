@@ -9,7 +9,7 @@ class kafkaConsumer:
             'bootstrap.servers': cfg.kafka_config['bootstrap.servers'],
             'group.id': cfg.kafka_config['group.id'],
             'auto.offset.reset': cfg.kafka_config['auto.offset.reset']
-        }       
+        }
 
         self.consumer = Consumer(conf)
         self.transformer = trasformer
