@@ -1,0 +1,24 @@
+name: 'sample-config'
+pipelines:
+  -
+    name: 'sample-first-pipeline'
+    input:
+      type: 'kafka'
+      topic: 'some-in-topic'
+    output:
+      type: 'kafka'
+      topic: 'some-out-topic'
+    transformation:
+      type: 'container'
+      container-image: 'some-image-name'
+  -
+    name: 'sample-second-pipeline'
+    input:
+      type: 'kafka'
+      topic: 'some-out-topic'
+    output:
+      type: 'kafka'
+      topic: 'some-second-out-topic'
+    transformation:
+      type: 'container'
+      container-image: 'some-second-image-name'
