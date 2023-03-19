@@ -9,4 +9,5 @@ def main():
     for pipeline_config in pipelines_configuration:
         run_pipeline(pipeline_config)
 
+    print('end build and run pipelines')
 main()
