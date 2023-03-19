@@ -10,7 +10,7 @@ app = Flask(__name__)
 def get_pipelines():
     pipelines_configuration = read_configuration_file()
     
-    return [json.dumps(pipeline.__dict__, default=str) for pipeline in pipelines_configuration], 200
+    return [json.dumps(pipeline.__dict__, indent=4, default=lambda x: x.__dict__) for pipeline in pipelines_configuration], 200
 
 @app.route('/api/deploy-pipelines')
 def deploy_pipelines():
