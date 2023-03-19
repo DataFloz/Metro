@@ -1,4 +1,5 @@
-from flask import Flask
+import json
+from flask import Flask, jsonify
 from configuration_reader import read_configuration_file
 from pipe_runner import run_pipeline
 
@@ -9,7 +10,7 @@ app = Flask(__name__)
 def get_pipelines():
     pipelines_configuration = read_configuration_file()
     
-    return pipelines_configuration, 200
+    return [json.dumps(pipeline.__dict__, default=str) for pipeline in pipelines_configuration], 200
 
 @app.route('/api/deploy-pipelines')
 def deploy_pipelines():
