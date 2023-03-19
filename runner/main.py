@@ -1,12 +1,13 @@
 from configuration_reader import read_configuration_file
-import json
-import docker
-from datetime import datetime
-# from pipeline.bl.transformer_runner import Transformer
+from pipe_runner import run_pipeline
 
 def main():
     print("start build pipelines")
     pipelines_configuration = read_configuration_file()
 
-    print('end build pipelines')
+    print("run each pipeline with its configuration")
+    for pipeline_config in pipelines_configuration:
+        run_pipeline(pipeline_config)
+
+    print('end build and run pipelines')
 main()
