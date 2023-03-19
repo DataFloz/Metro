@@ -2,6 +2,7 @@ from kafka.consumer import kafkaConsumer
 from kafka.producer import KafkaProducer
 from bl.transformer_runner import Transformer
 
+
 def main():
     print("start pipeline")
     transformer = Transformer()
