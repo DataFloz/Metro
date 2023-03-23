@@ -1,10 +1,16 @@
 import Head from 'next/head'
-import { AppShell, Navbar, Footer, Header } from '@mantine/core';
-import PipelinesTable from '@/components/pipelines_table'
-import { Title } from '@mantine/core';
+import useAxios from "axios-hooks";
+import { AppShell, Footer, Header, Title } from '@mantine/core';
+import PipelinesTable from '@/components/pipelines-table'
+import { PipelineList } from '@/models/pipeline-list';
 
 
 export default function Home() {
+  const [{ data, loading, error }] = useAxios<PipelineList>({
+    baseURL: "http://localhost:3000",
+    url: "/api/pipelines",
+  });
+
   return (
     <>
       <Head>
@@ -26,13 +32,14 @@ export default function Home() {
         })}
       >
       <Title>Pipelines-some name</Title>
-      <PipelinesTable 
-          pipelines={[
-            {name: 'first', inputTopic: 'input1', outputTopic: 'out1'},
-            {name: 'second', inputTopic: 'out1', outputTopic: 'out2'},
-            {name: 'third', inputTopic: 'input1', outputTopic: 'out3'},
-          ]}
-        ></PipelinesTable>
+      { 
+        data && data.pipelines ? 
+          <PipelinesTable 
+            pipelines={data?.pipelines}
+          ></PipelinesTable>
+        : 
+          <></>
+      }
     </AppShell>
     </>
   )

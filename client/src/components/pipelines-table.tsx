@@ -1,21 +1,16 @@
+import { Pipeline } from '@/models/pipeline';
 import { Table } from '@mantine/core';
 
-interface PipelineRowProp {
-    name: string;
-    inputTopic: string;
-    outputTopic: string;
-}
-
 interface TableProps {
-    pipelines: PipelineRowProp[];
+    pipelines: Pipeline[];
 }
 
 export default function PipelinesTable({pipelines}: TableProps) {
     const rows = pipelines.map((row) => (
         <tr key={row.name}>
             <td>{row.name}</td>
-            <td>{row.inputTopic}</td>
-            <td>{row.outputTopic}</td>
+            <td>{row.input}</td>
+            <td>{row.output}</td>
         </tr>
       ));
   
