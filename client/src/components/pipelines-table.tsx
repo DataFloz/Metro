@@ -6,11 +6,12 @@ interface TableProps {
 }
 
 export default function PipelinesTable({pipelines}: TableProps) {
+    console.log(pipelines)
     const rows = pipelines.map((row) => (
         <tr key={row.name}>
             <td>{row.name}</td>
-            <td>{row.input}</td>
-            <td>{row.output}</td>
+            <td>{row.input.topic}</td>
+            <td>{row.output.topic}</td>
         </tr>
       ));
   

@@ -1,6 +1,6 @@
 import { Pipeline } from "./pipeline";
 
 export interface PipelineList{
-    name: string;
+    // name: string;
     pipelines: Pipeline[]
 }

@@ -2,15 +2,15 @@ import Head from 'next/head'
 import useAxios from "axios-hooks";
 import { AppShell, Footer, Header, Title } from '@mantine/core';
 import PipelinesTable from '@/components/pipelines-table'
-import { PipelineList } from '@/models/pipeline-list';
+import { Pipeline } from '@/models/pipeline';
 
 
 export default function Home() {
-  const [{ data, loading, error }] = useAxios<PipelineList>({
+  const [{ data, loading, error }] = useAxios<Pipeline[]>({
     baseURL: "http://localhost:3000",
     url: "/api/pipelines",
   });
-
+  
   return (
     <>
       <Head>
@@ -33,9 +33,9 @@ export default function Home() {
       >
       <Title>Pipelines-some name</Title>
       { 
-        data && data.pipelines ? 
+        data ? 
           <PipelinesTable 
-            pipelines={data?.pipelines}
+            pipelines={data}
           ></PipelinesTable>
         : 
           <></>

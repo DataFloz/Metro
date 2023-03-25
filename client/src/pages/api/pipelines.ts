@@ -1,16 +1,12 @@
-import { PipelineList } from './../../models/pipeline-list';
 import type { NextApiRequest, NextApiResponse } from 'next'
+import axios from 'axios';
+import { Pipeline } from '@/models/pipeline';
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<PipelineList>
+  res: NextApiResponse<Pipeline[]>
 ) {
-  res.status(200).json({ 
-                        name: 'John Doe', 
-                        pipelines: [{
-                          name: 'some pipeline',
-                          input: 'some input',
-                          output: 'some output'
-                        }] 
-                      })
+  const runnerPipelines = await axios.get('http://localhost:5000/api/pipelines');
+  
+  res.status(200).json(runnerPipelines.data)
 }
