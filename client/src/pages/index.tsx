@@ -3,10 +3,11 @@ import useAxios from "axios-hooks";
 import { AppShell, Footer, Header, Title } from '@mantine/core';
 import PipelinesTable from '@/components/pipelines-table'
 import { Pipeline } from '@/models/pipeline';
+import { PipelineList } from '@/models/pipeline-list';
 
 
 export default function Home() {
-  const [{ data, loading, error }] = useAxios<Pipeline[]>({
+  const [{ data, loading, error }] = useAxios<PipelineList>({
     baseURL: "http://localhost:3000",
     url: "/api/pipelines",
   });
@@ -35,7 +36,7 @@ export default function Home() {
       { 
         data ? 
           <PipelinesTable 
-            pipelines={data}
+            pipelines={data.pipelines}
           ></PipelinesTable>
         : 
           <></>
