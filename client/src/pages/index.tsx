@@ -37,12 +37,12 @@ export default function Home() {
       { 
         data ? 
           <Grid>
-            <Grid.Col span={9}>
+            <Grid.Col span={8}>
               <PipelinesTable 
                 pipelines={data.pipelines}
               ></PipelinesTable>
             </Grid.Col>
-            <Grid.Col span={3}>
+            <Grid.Col span={3} offset={1}>
               <ConnectorsTable 
                 connectors={data.connectors}
               ></ConnectorsTable>
