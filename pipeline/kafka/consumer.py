@@ -1,10 +1,10 @@
 import config as cfg
 from confluent_kafka import Consumer, KafkaError, KafkaException
-from bl.transformer_runner import Transformer
+from bl.container_transformer_runner import ContainerTransformer
 from kafka.producer import KafkaProducer
 
 class kafkaConsumer:
-    def __init__(self, trasformer: Transformer, producer: KafkaProducer):
+    def __init__(self, trasformer: ContainerTransformer, producer: KafkaProducer):
         conf = {
             'bootstrap.servers': cfg.kafka_config['bootstrap.servers'],
             'group.id': cfg.kafka_config['group.id'],
@@ -34,7 +34,7 @@ class kafkaConsumer:
                 else:
                     # msg_process(msg)
                     print("some msg pocess")
-                    results = self.transformer.run_logic()
+                    results = self.transformer.run_logic(msg)
                     print("some msg produce")
                     self.producer.produce(results)
                     print("end msg pipeline")
