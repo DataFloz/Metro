@@ -12,7 +12,7 @@ class PipelineConfig:
     def as_dict(self):
         return {
             'name': self.name,
-            'input': self.input.__dict__,
-            'output': self.output.__dict__,
-            'transformation': self.transformation.__dict__
+            'input': self.input.as_dict(),
+            'output': self.output.as_dict(),
+            'transformation': self.transformation.as_dict()
         }

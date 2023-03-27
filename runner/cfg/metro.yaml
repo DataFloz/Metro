@@ -1,4 +1,10 @@
 name: 'sample-config'
+connectors:
+  -
+    name: 'some-kafka-connector'
+    type: 'kafka'
+    brokers: 'some-brokers-url'
+    group_id: 'some-group-id'
 pipelines:
   -
     name: 'sample-first-pipeline'
