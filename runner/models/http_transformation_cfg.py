@@ -1,4 +1,4 @@
-from runner.models.transformation_cfg import TransformationConfig
+from models.transformation_cfg import TransformationConfig
 
 
 class HttpTransformationCfg(TransformationConfig):

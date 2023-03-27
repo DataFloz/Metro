@@ -5,8 +5,8 @@ from models.output_cfg import OutputConfig
 from models.transformation_cfg import TransformationConfig
 from models.connector_cfg import ConnectorConfig
 from models.metro_cfg import MetroConfig
-from runner.models.container_transformation_cfg import ContainerTransformationConfig
-from runner.models.http_transformation_cfg import HttpTransformationCfg
+from models.container_transformation_cfg import ContainerTransformationConfig
+from models.http_transformation_cfg import HttpTransformationCfg
 
 CONFIGURATION_FILE = './cfg/metro.yaml'
 
@@ -31,6 +31,7 @@ def read_configuration_file()->MetroConfig:
 
 def convert_pipeline_transformation_dict_to_models(pipeline) -> TransformationConfig:
     transfomationType = pipeline["transformation"]["type"]
+    print(f'transformationType {transfomationType}')
     if transfomationType == 'http':
         transformation = HttpTransformationCfg(pipeline["transformation"]["http_url"], 
                                                pipeline["transformation"]["headers"], 
