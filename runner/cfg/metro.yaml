@@ -28,3 +28,20 @@ pipelines:
     transformation:
       type: 'container'
       container-image: 'some-second-image-name'
+  -
+    name: 'sample-second-pipeline'
+    input:
+      type: 'kafka'
+      topic: 'some-out-topic'
+    output:
+      type: 'kafka'
+      topic: 'some-second-out-topic'
+    transformation:
+      type: 'http'
+      http_url: 'some-http-url'
+      headers: 
+        key1: 'value1'
+        key2: 'value2'
+      params:
+        key1: 'value1'
+        key2: 'value2'

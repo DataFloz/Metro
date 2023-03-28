@@ -1,2 +1,3 @@
 confluent-kafka
 docker
+requests
