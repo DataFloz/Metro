@@ -1,9 +1,10 @@
 import Head from 'next/head'
 import useAxios from "axios-hooks";
-import { AppShell, Footer, Header, Title } from '@mantine/core';
+import { AppShell, Footer, Grid, Header, Title } from '@mantine/core';
 import PipelinesTable from '@/components/pipelines-table'
 import { Pipeline } from '@/models/pipeline';
 import { PipelineList } from '@/models/pipeline-list';
+import ConnectorsTable from '@/components/connectors-table';
 
 
 export default function Home() {
@@ -35,9 +36,18 @@ export default function Home() {
       <Title>Pipelines-some name</Title>
       { 
         data ? 
-          <PipelinesTable 
-            pipelines={data.pipelines}
-          ></PipelinesTable>
+          <Grid>
+            <Grid.Col span={8}>
+              <PipelinesTable 
+                pipelines={data.pipelines}
+              ></PipelinesTable>
+            </Grid.Col>
+            <Grid.Col span={3} offset={1}>
+              <ConnectorsTable 
+                connectors={data.connectors}
+              ></ConnectorsTable>
+            </Grid.Col>
+          </Grid>
         : 
           <></>
       }
