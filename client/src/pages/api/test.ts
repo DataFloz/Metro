@@ -10,7 +10,7 @@ export default async function handler(
 ) {
     if (req.method === 'POST') {
         const pipeline = req.body.pipeline as Pipeline
-        const connector = req.body.KafkaConnector as Connector
+        const connector = req.body.kafkaConnector as Connector
         const message = req.body.message
         console.log(connector);
 
@@ -26,7 +26,7 @@ export default async function handler(
         await producer.send({
             topic: pipeline.input.topic,
             messages: [
-                { key: 'key1', value: message },
+                { key: 'test-key', value: message },
             ],
         })
 
