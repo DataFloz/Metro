@@ -2,9 +2,9 @@ import Head from 'next/head'
 import useAxios from "axios-hooks";
 import { AppShell, Footer, Grid, Header, Title } from '@mantine/core';
 import PipelinesTable from '@/components/pipelines-table'
-import { Pipeline } from '@/models/pipeline';
 import { PipelineList } from '@/models/pipeline-list';
 import ConnectorsTable from '@/components/connectors-table';
+import ProduceTest from '@/components/test-message-dialog';
 
 
 export default function Home() {
@@ -36,7 +36,7 @@ export default function Home() {
       <Title>Pipelines-some name</Title>
       { 
         data ? 
-          <Grid>
+          <Grid grow gutter="lg">
             <Grid.Col span={8}>
               <PipelinesTable 
                 pipelines={data.pipelines}
@@ -47,6 +47,7 @@ export default function Home() {
                 connectors={data.connectors}
               ></ConnectorsTable>
             </Grid.Col>
+            <ProduceTest pipeline={data.pipelines[0]} kafkaConnector={data.connectors[0]}></ProduceTest>
           </Grid>
         : 
           <></>
