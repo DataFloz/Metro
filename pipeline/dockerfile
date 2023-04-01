@@ -4,9 +4,10 @@ WORKDIR /app
 
 RUN ls
 
-RUN pip install -r .w/requirements.txt
-
 COPY ./ /app
+
+RUN pip install -r ./requirements.txt
+
 
 RUN ls
 

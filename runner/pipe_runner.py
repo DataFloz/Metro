@@ -11,7 +11,5 @@ def run_pipeline(pipeline_configuration: PipelineConfig, kafka_connector: Connec
                         tag=f"{pipeline_configuration.name}:latest")
 
     client.containers.run(image=f"{pipeline_configuration.name}:latest",
-                          environment=json.dumps(envs_dict,
-                                                 indent=4,
-                                                 default=lambda x: x.__dict__),
+                          environment=envs_dict,
                           detach=True)
