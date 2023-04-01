@@ -1,9 +1,9 @@
 name: 'sample-config'
 connectors:
   -
-    name: 'some-kafka-connector'
+    name: 'local-kafka-connector'
     type: 'kafka'
-    brokers: 'some-brokers-url'
+    brokers: 'localhost:9092'
     group_id: 'some-group-id'
 pipelines:
   -

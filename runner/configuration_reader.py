@@ -8,7 +8,7 @@ from models.metro_cfg import MetroConfig
 from models.container_transformation_cfg import ContainerTransformationConfig
 from models.http_transformation_cfg import HttpTransformationCfg
 
-CONFIGURATION_FILE = './cfg/metro.yaml'
+CONFIGURATION_FILE = './runner/cfg/metro.yaml'
 
 def read_configuration_file()->MetroConfig:
     metro_config = {}
@@ -54,7 +54,8 @@ def convert_pipeline_dict_to_models(pipeline):
 
 def convert_connector_dict_to_models(connector):
     connector_config = ConnectorConfig(name=connector["name"],
-                                     brokers=connector["brokers"],
-                                     group_id=connector["group_id"])
+                                       type=connector["type"],
+                                       brokers=connector["brokers"],
+                                       group_id=connector["group_id"])
 
     return connector_config
