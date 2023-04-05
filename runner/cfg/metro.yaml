@@ -3,7 +3,7 @@ connectors:
   -
     name: 'local-kafka-connector'
     type: 'kafka'
-    brokers: 'kafka:9092'
+    brokers: 'kafka:29092'
     group_id: 'some-group-id'
 pipelines:
   -

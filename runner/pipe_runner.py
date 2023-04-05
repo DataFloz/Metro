@@ -12,4 +12,5 @@ def run_pipeline(pipeline_configuration: PipelineConfig, kafka_connector: Connec
 
     client.containers.run(image=f"{pipeline_configuration.name}:latest",
                           environment=envs_dict,
+                          network='metro_devcontainer_default',
                           detach=True)
