@@ -44,4 +44,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    
+    environment:
+      - RUNNER_URL="http://app:5000"
