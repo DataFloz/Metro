@@ -38,3 +38,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - "zookeeper"
+  client:
+    build: 
+      context: ../client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    
