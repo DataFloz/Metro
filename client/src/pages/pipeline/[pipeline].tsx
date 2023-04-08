@@ -48,9 +48,7 @@ export default function Home() {
       }      
     });
   };
-  useEffect(() => {
-    console.log(dataContext?.config);
-  }, [dataContext]);
+  
   let currentPipeline = dataContext?.config.pipelines.filter(
     (pipe) => pipe.name === pipeline
   )[0];
