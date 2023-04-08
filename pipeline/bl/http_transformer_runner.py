@@ -1,10 +1,10 @@
 import json
 import requests
 
-from pipeline.bl.iTransformerRunnerInterface import iTransforerRunnerInterface
+from bl.iTransformerRunnerInterface import iTransforerRunnerInterface
 
 
-class ContainerTransformer(iTransforerRunnerInterface):
+class HttpTransformer(iTransforerRunnerInterface):
     def __init__(self, http_url, headers={}, params={}):
         self.http_url = http_url
         self.headers = headers

@@ -1,6 +1,7 @@
 class ConnectorConfig:
-    def __init__(self, name, brokers, group_id):
+    def __init__(self, name, type, brokers, group_id):
         self.name = name
+        self.type = type
         self.brokers = brokers
         self.group_id = group_id
 

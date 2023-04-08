@@ -5,10 +5,11 @@ from kafka.producer import KafkaProducer
 
 class kafkaConsumer:
     def __init__(self, trasformer: iTransforerRunnerInterface, producer: KafkaProducer):
+        print("connect to:" + cfg.kafka_config['bootstrap.servers'])
         conf = {
             'bootstrap.servers': cfg.kafka_config['bootstrap.servers'],
             'group.id': cfg.kafka_config['group.id'],
-            'auto.offset.reset': cfg.kafka_config['auto.offset.reset']
+            'auto.offset.reset': 'latest'
         }
 
         self.consumer = Consumer(conf)
@@ -16,6 +17,7 @@ class kafkaConsumer:
         self.producer = producer
 
     def consume(self, topics):
+        print(topics)
         self.running = True
         try:
             self.consumer.subscribe(topics)

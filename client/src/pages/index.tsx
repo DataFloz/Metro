@@ -7,6 +7,7 @@ import ConnectorsTable from '@/components/connectors-table';
 import ProduceTest from '@/components/test-message-dialog';
 import { useEffect } from 'react';
 import { useDataContext } from '@/context/context';
+import CreateTopics from '@/components/create-all-topics';
 
 
 export default function Home() {
@@ -49,19 +50,27 @@ export default function Home() {
       <Title>Pipelines-some name</Title>
       { 
         data ? 
-          <Grid grow gutter="lg">
-            <Grid.Col span={8}>
-              <PipelinesTable 
-                pipelines={data.pipelines}
-              ></PipelinesTable>
-            </Grid.Col>
-            <Grid.Col span={3} offset={1}>
-              <ConnectorsTable 
-                connectors={data.connectors}
-              ></ConnectorsTable>
-            </Grid.Col>
-            <ProduceTest pipeline={data.pipelines[0]} kafkaConnector={data.connectors[0]}></ProduceTest>
+          <><Grid grow gutter="lg">
+              <Grid.Col span={8}>
+                <PipelinesTable
+                  pipelines={data.pipelines}
+                ></PipelinesTable>
+              </Grid.Col>
+              <Grid.Col span={3} offset={1}>
+                <ConnectorsTable
+                  connectors={data.connectors}
+                ></ConnectorsTable>
+              </Grid.Col>
+              <Grid>
+                <Grid.Col span={2} offset={2}>
+                  <ProduceTest pipeline={data.pipelines[0]} kafkaConnector={data.connectors[0]}></ProduceTest>
+                </Grid.Col>
+                <Grid.Col span={2} offset={5}>
+                  <CreateTopics pipelines={data.pipelines} kafkaConnector={data.connectors[0]}></CreateTopics>
+                </Grid.Col>
+              </Grid>
           </Grid>
+          </>
         : 
           <></>
       }
