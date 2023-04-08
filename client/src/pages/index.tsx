@@ -18,7 +18,6 @@ export default function Home() {
   const dataContext = useDataContext()
   useEffect(() => {
     if (data) {
-      console.log('daaaaata', data)
       dataContext?.updateConfig(data)
     }
 
