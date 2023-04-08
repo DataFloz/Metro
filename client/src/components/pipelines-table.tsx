@@ -1,23 +1,27 @@
-import { Pipeline } from '@/models/pipeline';
-import { Table } from '@mantine/core';
-import Link from 'next/link';
+import { Pipeline } from "@/models/pipeline";
+import { Table } from "@mantine/core";
+import Link from "next/link";
 
 interface TableProps {
-    pipelines: Pipeline[];
+  pipelines: Pipeline[];
 }
 
-export default function PipelinesTable({pipelines}: TableProps) {
-    const rows = pipelines.map((row) => (
-      <Link href={`/pipeline/${encodeURIComponent(row.name)}`}>
-        <tr key={row.name}>
-            <td>{row.name}</td>
-            <td>{row.input.topic}</td>
-            <td>{row.output.topic}</td>
-        </tr>
-      </Link>
-      ));
-  
-  return (<Table>
+export default function PipelinesTable({ pipelines }: TableProps) {
+  const rows = pipelines.map((row) => (
+    <tr key={row.name}>
+      <td>
+        <Link href={`/pipeline/${encodeURIComponent(row.name)}`}>
+          {row.name}
+        </Link>
+      </td>
+
+      <td>{row.input.topic}</td>
+      <td>{row.output.topic}</td>
+    </tr>
+  ));
+
+  return (
+    <Table>
       <thead>
         <tr>
           <th>Pipeline name</th>
@@ -26,5 +30,6 @@ export default function PipelinesTable({pipelines}: TableProps) {
         </tr>
       </thead>
       <tbody>{rows}</tbody>
-  </Table>)
+    </Table>
+  );
 }
