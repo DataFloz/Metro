@@ -24,9 +24,6 @@ export default function Home() {
 
   }, [data])
 
-  useEffect(() => {
-    console.log('dataContext.config', dataContext?.config)
-  }, [dataContext?.config])
   return (
     <>
       <Head>
