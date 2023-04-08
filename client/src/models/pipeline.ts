@@ -1,11 +1,11 @@
 export interface Pipeline{
     name: string;
-    input: Input;
+    input: InputModel;
     output: Output;
     transformation: Transformation;
 }
 
-export interface Input {
+export interface InputModel {
     topic: string    
 }
 
