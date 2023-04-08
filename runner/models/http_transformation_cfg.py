@@ -4,6 +4,7 @@ from models.transformation_cfg import TransformationConfig
 class HttpTransformationCfg(TransformationConfig):
     def __init__(self, http_url, headers={}, params={}):
         self.http_url = http_url
+        self.type = 'http'
         self.headers = headers
         self.params = params
 

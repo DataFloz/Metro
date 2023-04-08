@@ -1,7 +1,7 @@
 import docker
 import json
 
-from pipeline.bl.iTransformerRunnerInterface import iTransforerRunnerInterface
+from bl.iTransformerRunnerInterface import iTransforerRunnerInterface
 
 
 class ContainerTransformer(iTransforerRunnerInterface):
