@@ -5,6 +5,8 @@ import PipelinesTable from '@/components/pipelines-table'
 import { PipelineList } from '@/models/pipeline-list';
 import ConnectorsTable from '@/components/connectors-table';
 import ProduceTest from '@/components/test-message-dialog';
+import { useEffect } from 'react';
+import { useDataContext } from '@/context/context';
 import CreateTopics from '@/components/create-all-topics';
 
 
@@ -13,7 +15,14 @@ export default function Home() {
     baseURL: "http://localhost:3000",
     url: "/api/pipelines",
   });
-  
+  const dataContext = useDataContext()
+  useEffect(() => {
+    if (data) {
+      dataContext?.updateConfig(data)
+    }
+
+  }, [data])
+
   return (
     <>
       <Head>

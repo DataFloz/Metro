@@ -12,5 +12,6 @@ class HttpTransformationCfg(TransformationConfig):
         return {
             'http_url': self.http_url,
             'headers': self.headers,
-            'params': self.params
+            'params': self.params,
+            'type': self.type
         }
