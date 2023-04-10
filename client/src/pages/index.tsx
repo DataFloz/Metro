@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import useAxios from "axios-hooks";
-import { AppShell, Footer, Grid, Header, Title } from '@mantine/core';
+import { AppShell, Footer, Grid, Header, Tabs, Title } from '@mantine/core';
 import PipelinesTable from '@/components/pipelines-table'
 import { PipelineList } from '@/models/pipeline-list';
 import ConnectorsTable from '@/components/connectors-table';
-import ProduceTest from '@/components/test-message-dialog';
 import { useEffect } from 'react';
 import { useDataContext } from '@/context/context';
 import CreateTopics from '@/components/create-all-topics';
+import PipelinesGraph from '@/components/pipelines-graph';
 
 
 export default function Home() {
@@ -48,9 +48,22 @@ export default function Home() {
         data ? 
           <><Grid grow gutter="lg">
               <Grid.Col span={8}>
-                <PipelinesTable
-                  pipelines={data.pipelines}
-                ></PipelinesTable>
+              <Tabs defaultValue="graph">
+                <Tabs.List>
+                  <Tabs.Tab value="table">Table</Tabs.Tab>
+                  <Tabs.Tab value="graph">Graph</Tabs.Tab>
+                </Tabs.List>
+
+                <Tabs.Panel value="table" pt="xs">
+                  <PipelinesTable
+                    pipelines={data.pipelines}
+                  ></PipelinesTable>
+                </Tabs.Panel>
+
+                <Tabs.Panel value="graph" pt="xs">
+                  <PipelinesGraph pipelines={data.pipelines}></PipelinesGraph>
+                </Tabs.Panel>
+              </Tabs>
               </Grid.Col>
               <Grid.Col span={3} offset={1}>
                 <ConnectorsTable
