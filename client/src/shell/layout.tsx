@@ -1,4 +1,4 @@
-import { ActionIcon, AppShell, Footer, Grid, Header } from "@mantine/core";
+import { ActionIcon, AppShell, Col, Footer, Grid, Header, NavLink } from "@mantine/core";
 import { IconBrandGithubFilled } from "@tabler/icons-react";
 
 type Props = {
@@ -11,7 +11,13 @@ export default function Layout({children}:Props) {
         <>
         <AppShell
             padding="md"
-            header={<Header height={60} p="xs">DataFloz</Header>}
+            header={<Header height={60} p="xs" >
+                      <Grid grow>
+                        <Col span="content">
+                          <NavLink component="a" href="/" style={{width:'fit-content'}} label="DataFloz" />
+                        </Col>
+                      </Grid>
+                    </Header>}
             footer={
               <Footer height={60} p="md">
                 <Grid>
