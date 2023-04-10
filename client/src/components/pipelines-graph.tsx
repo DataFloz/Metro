@@ -35,13 +35,7 @@ export default function PipelinesGraph({ pipelines }: GraphProps) {
   });
 
   const options = {
-    layout: {
-      hierarchical: true
-    },
-    edges: {
-      color: "#000000"
-    },
-    height: "500px"
+    height: "400px"
   };
 
   const events = {
