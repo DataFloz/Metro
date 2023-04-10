@@ -57,13 +57,8 @@ export default function Home() {
                   connectors={data.connectors}
                 ></ConnectorsTable>
               </Grid.Col>
-              <Grid>
-                <Grid.Col span={2} offset={2}>
-                  <ProduceTest pipeline={data.pipelines[0]} kafkaConnector={data.connectors[0]}></ProduceTest>
-                </Grid.Col>
-                <Grid.Col span={2} offset={5}>
+              <Grid m={15}>
                   <CreateTopics pipelines={data.pipelines} kafkaConnector={data.connectors[0]}></CreateTopics>
-                </Grid.Col>
               </Grid>
           </Grid>
           </>

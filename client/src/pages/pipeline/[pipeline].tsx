@@ -5,6 +5,7 @@ import { Pipeline, InputModel } from "../../models/pipeline";
 import { Input } from "@mantine/core";
 import { AppShell, Footer, Grid, Header, Title } from '@mantine/core';
 import Head from 'next/head'
+import ProduceTest from "@/components/test-message-dialog";
 
 export default function Home() {
   const router = useRouter();
@@ -72,7 +73,13 @@ export default function Home() {
             main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
         })}
       >
-      {currentPipeline ? iterate(currentPipeline) : ""}
+      {currentPipeline ? 
+        <>
+          {iterate(currentPipeline)}
+          <Grid m={15}>
+            <ProduceTest pipeline={currentPipeline} kafkaConnector={dataContext!.config.connectors[0]}></ProduceTest>
+          </Grid>
+        </> : ""}
       </AppShell>
     </>
   );

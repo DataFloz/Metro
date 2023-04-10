@@ -8,7 +8,7 @@ from models.metro_cfg import MetroConfig
 from models.container_transformation_cfg import ContainerTransformationConfig
 from models.http_transformation_cfg import HttpTransformationCfg
 
-CONFIGURATION_FILE = './cfg/metro.yaml'
+CONFIGURATION_FILE = './runner/cfg/metro.yaml'
 
 def read_configuration_file()->MetroConfig:
     metro_config = {}
