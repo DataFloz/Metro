@@ -23,8 +23,11 @@ As you consider potential FAAS stream solutions for your business, it's importan
 <img width="942" alt="image" src="https://user-images.githubusercontent.com/17068656/230864948-eb1f67d7-5627-462b-aa3b-25091f5395d2.png">
 
 Container transformer:
-<img width="197" alt="image" src="https://user-images.githubusercontent.com/17068656/230865043-e353fda5-5233-4ecc-9e8f-2fb7098e1902.png">
+
+ <img width="197" alt="image" src="https://user-images.githubusercontent.com/17068656/230865043-e353fda5-5233-4ecc-9e8f-2fb7098e1902.png">
+
 HTTP transformer:
+
 <img width="197" alt="image" src="https://user-images.githubusercontent.com/17068656/230865901-a4c2cde4-c5a0-47e5-b27a-6fb2063d32b1.png">
 
 
