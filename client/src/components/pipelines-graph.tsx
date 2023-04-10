@@ -2,6 +2,7 @@ import Graph from "react-graph-vis";
 import { uuid } from 'uuidv4';
 import { Pipeline } from "@/models/pipeline";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 interface GraphProps {
   pipelines: Pipeline[];
@@ -11,11 +12,9 @@ export default function PipelinesGraph({ pipelines }: GraphProps) {
   const [edges, setEdges] = useState<{ from: string; to: string; }[]>([])
   const [nodes, setNodes] = useState<{ id: string; label: string; title: string; }[]>([])
   let [graphKey, setGraphKey] = useState(uuid())
-
-
+  const { push } = useRouter();
 
   useEffect(()=>{
-    debugger;
     const routes: { from: string; to: string; }[] = []
     pipelines.forEach(p => {
       const nextPipelines = pipelines.filter((x) => x.input.topic == p.output.topic)
@@ -40,7 +39,10 @@ export default function PipelinesGraph({ pipelines }: GraphProps) {
 
   const events = {
     select: function(event: { nodes: any; edges: any; }) {
-      var { nodes, edges } = event;
+      const { nodes, edges } = event;
+      debugger;
+      if(nodes && nodes.length)
+        push(`/pipeline/${nodes[0]}`)
     }
   };
   return (
