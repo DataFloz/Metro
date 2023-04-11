@@ -24,7 +24,6 @@ export default function Home() {
     )
   }
   const dataContext = useDataContext();
-  debugger;
   const iterate = (pipeline: Pipeline) => {
     return Object.entries(pipeline).map(([key, value]) => {
       console.log('key', key)
