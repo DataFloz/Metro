@@ -40,7 +40,6 @@ export default function PipelinesGraph({ pipelines }: GraphProps) {
   const events = {
     select: function(event: { nodes: any; edges: any; }) {
       const { nodes, edges } = event;
-      debugger;
       if(nodes && nodes.length)
         push(`/pipeline/${nodes[0]}`)
     }

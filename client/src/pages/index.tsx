@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { useDataContext } from '@/context/context';
 import CreateTopics from '@/components/create-all-topics';
 import PipelinesGraph from '@/components/pipelines-graph';
+import RolloutMetro from "@/components/rollout-metro";
 
 
 export default function Home() {
@@ -52,7 +53,12 @@ export default function Home() {
                 ></ConnectorsTable>
               </Grid.Col>
               <Grid m={15}>
+                <Grid.Col span={1} offset={3}>
                   <CreateTopics pipelines={data.pipelines} kafkaConnector={data.connectors[0]}></CreateTopics>
+                </Grid.Col>
+                <Grid.Col span={1} offset={5}>
+                  <RolloutMetro></RolloutMetro>
+                </Grid.Col>
               </Grid>
           </Grid>
           </>
