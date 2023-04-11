@@ -27,7 +27,10 @@ export default function Layout({children}:Props) {
                         DataFloz - Data stream transformation platform
                     </Grid.Col>
                     <Grid.Col span={1} offset={2}>
-                        <ActionIcon component="a" href="https://github.com/DataFloz/Metro">
+                        <ActionIcon 
+                              variant="outline"
+                              component="a" 
+                              href="https://github.com/DataFloz/Metro">
                             <IconBrandGithubFilled size="1.125rem" />
                         </ActionIcon>
                     </Grid.Col>
