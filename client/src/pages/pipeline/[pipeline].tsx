@@ -24,6 +24,7 @@ export default function Home() {
     )
   }
   const dataContext = useDataContext();
+  debugger;
   const iterate = (pipeline: Pipeline) => {
     return Object.entries(pipeline).map(([key, value]) => {
       console.log('key', key)
@@ -39,7 +40,9 @@ export default function Home() {
             case 'container':
               return getInputValue('container url', value.container_url)
             case 'http':
-              return getInputValue('http url', value.http_url)
+              return getInputValue('HTTP url', value.http_url)
+            case 'sql':
+              return getInputValue('SQL query', value.sql_query)
             default:
               break;
           }

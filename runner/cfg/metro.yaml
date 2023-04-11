@@ -26,8 +26,8 @@ pipelines:
       type: 'kafka'
       topic: 'some-second-out-topic'
     transformation:
-      type: 'container'
-      container-image: 'some-second-image-name'
+      type: 'sql'
+      sql_query: 'SELECT * FROM msg WHERE age > 18'
   -
     name: 'sample-third-pipeline'
     input:
