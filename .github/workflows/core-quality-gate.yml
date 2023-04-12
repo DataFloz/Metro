@@ -17,9 +17,7 @@ jobs:
           pip install -r ./runner/requirements.txt
           echo "PYTHON_PATH=./runner" >> $GITHUB_ENV
       - name: Analysing the code with pylint
-        run: |
-          cd ./runner
-          pylint .;
+        run: pylint ./runner
   pipeline-lint:
     runs-on: ubuntu-latest
     name: Executes pylint pipeline
