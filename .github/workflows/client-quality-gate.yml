@@ -11,15 +11,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
+      - name: change dir to client
+        uses: cd ./client
       - name: Install Node.js dependencies
         run: npm ci
-        with:
-          path: ./client
       - name: Lint
         run: npm run lint
-        with:
-          path: ./client
       - name: Build
         run: npm run build
-        with:
-          path: ./client
