@@ -12,7 +12,7 @@ jobs:
         with:
           node-version: 14
       - name: change dir to client
-        uses: cd ./client
+        uses: ./client
       - name: Install Node.js dependencies
         run: npm ci
       - name: Lint
