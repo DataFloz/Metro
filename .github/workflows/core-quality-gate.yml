@@ -19,7 +19,7 @@ jobs:
       - name: Analysing the code with pylint
         run: |
           cd ./runner
-          find . -name '*.py' -exec pylint {} \;
+          pylint .;
   pipeline-lint:
     runs-on: ubuntu-latest
     name: Executes pylint pipeline
