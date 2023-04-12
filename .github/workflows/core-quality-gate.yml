@@ -5,14 +5,19 @@ jobs:
     runs-on: ubuntu-latest
     name: Executes pylint runner
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Lint
-        uses: gabriel-milan/action-pylint@v1
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
         with:
-          path: "./runner/**/*.py" # Glob pattern for files to lint
-          fail: true # Fail the action if pylint errors are found
-          pr-message: true # Send a PR message if pylint errors are found
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint
+      - name: Analysing the code with pylint
+        run: |
+          cd ./runner
+          find . -name '*.py' -exec pylint {} \;
   pipeline-lint:
     runs-on: ubuntu-latest
     name: Executes pylint pipeline
