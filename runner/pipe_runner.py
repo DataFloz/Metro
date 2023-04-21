@@ -1,4 +1,3 @@
-import json
 import docker
 from models.pipeline_config import PipelineConfig
 from models.connector_cfg import ConnectorConfig
@@ -9,7 +8,6 @@ def run_pipeline(pipeline_configuration: PipelineConfig, kafka_connector: Connec
     envs_dict.update(kafka_connector.as_dict())
     client.images.build(path="./pipeline",
                         tag=f"{pipeline_configuration.name}:latest")
-    
 
     try:
         client.containers.get(pipeline_configuration.name).stop()

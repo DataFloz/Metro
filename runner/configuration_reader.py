@@ -24,7 +24,7 @@ def read_configuration_file()->MetroConfig:
 
             metro_config = MetroConfig(configuration_data["name"], connectors_config,
                                         pipelines_config)
-            
+
         except yaml.YAMLError as err:
             print(err)
 
@@ -34,15 +34,15 @@ def convert_pipeline_transformation_dict_to_models(pipeline) -> TransformationCo
     transfomation_type = pipeline["transformation"]["type"]
     print(f'transformationType {transfomation_type}')
     if transfomation_type == 'http':
-        transformation = HttpTransformationCfg(pipeline["transformation"]["http_url"], 
-                                               pipeline["transformation"]["headers"], 
+        transformation = HttpTransformationCfg(pipeline["transformation"]["http_url"],
+                                               pipeline["transformation"]["headers"],
                                                pipeline["transformation"]["params"])
     elif transfomation_type == 'container':
         transformation = ContainerTransformationConfig(
                                             pipeline["transformation"]["container-image"])
     else:
         raise Exception(f'transformation type {transfomation_type} is not supported yet!')
-    
+
     return transformation
 
 def convert_pipeline_dict_to_models(pipeline):
