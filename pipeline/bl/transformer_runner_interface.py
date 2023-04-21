@@ -4,4 +4,3 @@ class TransforerRunnerInterface:
 
     def run_logic(self, msg):
         """ execute logic - meant to be override """
-        pass

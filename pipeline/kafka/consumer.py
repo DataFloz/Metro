@@ -15,6 +15,7 @@ class KafkaConsumer:
         self.consumer = Consumer(conf)
         self.transformer = trasformer
         self.producer = producer
+        self.running = False
 
     def consume(self, topics):
         print(topics)
@@ -24,12 +25,14 @@ class KafkaConsumer:
 
             while self.running:
                 msg = self.consumer.poll(timeout=1.0)
-                if msg is None: continue
+                if msg is None:
+                    continue
 
                 if msg.error():
                     if msg.error().code() == KafkaError._PARTITION_EOF:
                         # End of partition event
-                        print(f"{msg.topic()} {msg.partition()} reached end at offset {msg.offset()}\n")
+                        print(f"{msg.topic()} {msg.partition()} \
+                              reached end at offset {msg.offset()}\n")
                     elif msg.error():
                         raise KafkaException(msg.error())
                 else:

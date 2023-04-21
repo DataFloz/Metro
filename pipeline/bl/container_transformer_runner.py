@@ -1,6 +1,5 @@
 import json
 import docker
-
 from bl.transformer_runner_interface import TransforerRunnerInterface
 
 
@@ -8,7 +7,6 @@ class ContainerTransformer(TransforerRunnerInterface):
     def __init__(self, image_name):
         # print("here we will initiate the transformer with the pipeline config")
         self.image_name = image_name
-        pass
 
     def run_logic(self, msg):
         print("run the specific FAAS logic and return the result")
