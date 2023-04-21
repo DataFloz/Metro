@@ -39,11 +39,12 @@ def convert_pipeline_transformation_dict_to_models(pipeline) -> TransformationCo
                                                pipeline["transformation"]["headers"],
                                                pipeline["transformation"]["params"])
     elif transfomation_type == 'container':
-        transformation = ContainerTransformationConfig(pipeline["transformation"]["container-image"])
+        transformation = \
+                    ContainerTransformationConfig(pipeline["transformation"]["container-image"])
     elif transfomation_type == 'sql':
         transformation = SQLTransformationCfg(pipeline["transformation"]["sql_query"])
     else:
-        raise Exception(f'transformation type {transfomation_type} is not supported yet!')
+        raise LookupError(f'transformation type {transfomation_type} is not supported yet!')
 
     return transformation
 

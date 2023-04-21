@@ -1,4 +1,5 @@
 import docker
+from docker.errors import NotFound
 from models.pipeline_config import PipelineConfig
 from models.connector_cfg import ConnectorConfig
 
@@ -12,7 +13,7 @@ def run_pipeline(pipeline_configuration: PipelineConfig, kafka_connector: Connec
     try:
         client.containers.get(pipeline_configuration.name).stop()
         client.containers.prune()
-    except:
+    except NotFound:
         print("no such container")
 
     client.containers.run(image=f"{pipeline_configuration.name}:latest",
