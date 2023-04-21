@@ -1,3 +1,5 @@
 confluent-kafka
 docker
 requests
+sqlite3
+pandas
