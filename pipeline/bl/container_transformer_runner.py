@@ -1,5 +1,5 @@
-import docker
 import json
+import docker
 
 from bl.iTransformerRunnerInterface import iTransforerRunnerInterface
 
@@ -13,9 +13,9 @@ class ContainerTransformer(iTransforerRunnerInterface):
     def run_logic(self, msg):
         print("run the specific FAAS logic and return the result")
         client = docker.from_env()
-        str = json.dumps(msg)
-        str = f"'{msg}'"
-        container = client.containers.run(self.image_name,command=f"python main.py {str}", detach=True)
+        data_str = json.dumps(msg)
+        data_str = f"'{msg}'"
+        container = client.containers.run(self.image_name,command=f"python main.py {data_str}", detach=True)
         container.wait()
         result = container.logs().decode('utf-8')
         print(f"res: {container.logs().decode('utf-8')}")

@@ -12,7 +12,8 @@ class HttpTransformer(iTransforerRunnerInterface):
 
     def run_logic(self, msg):
         json_msg = json.dumps(msg)
-        reponse = requests.post(self.http_url, params=self.params,json=json_msg, headers=self.headers)
+        reponse = requests.post(self.http_url, params=self.params,json=json_msg,
+                                headers=self.headers)
         print(f"res: {reponse.json()}")
 
         return reponse.json()

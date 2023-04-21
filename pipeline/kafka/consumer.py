@@ -3,7 +3,7 @@ from confluent_kafka import Consumer, KafkaError, KafkaException
 from bl.iTransformerRunnerInterface import iTransforerRunnerInterface
 from kafka.producer import KafkaProducer
 
-class kafkaConsumer:
+class KafkaConsumer:
     def __init__(self, trasformer: iTransforerRunnerInterface, producer: KafkaProducer):
         print("connect to:" + cfg.kafka_config['bootstrap.servers'])
         conf = {
@@ -29,8 +29,7 @@ class kafkaConsumer:
                 if msg.error():
                     if msg.error().code() == KafkaError._PARTITION_EOF:
                         # End of partition event
-                        print('%% %s [%d] reached end at offset %d\n' %
-                                        (msg.topic(), msg.partition(), msg.offset()))
+                        print(f"{msg.topic()} {msg.partition()} reached end at offset {msg.offset()}\n")
                     elif msg.error():
                         raise KafkaException(msg.error())
                 else:

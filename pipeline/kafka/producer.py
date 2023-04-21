@@ -13,9 +13,9 @@ class KafkaProducer():
 
     def produced_callback(self, err, msg):
         if err is not None:
-            print("Failed to deliver message: %s: %s" % (str(msg), str(err)))
+            print(f"Failed to deliver message: {str(msg)}: {str(err)}")
         else:
-            print("Message produced: %s" % (str(msg)))
+            print(f"Message produced: {str(msg)}")
 
     def produce(self, value):
         self.producer.produce(self.topic, key=None, value=value, callback=self.produced_callback)
