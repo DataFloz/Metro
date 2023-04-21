@@ -7,6 +7,7 @@ from models.connector_cfg import ConnectorConfig
 from models.metro_cfg import MetroConfig
 from models.container_transformation_cfg import ContainerTransformationConfig
 from models.http_transformation_cfg import HttpTransformationCfg
+from models.sql_transformation_cfg import SQLTransformationCfg
 
 CONFIGURATION_FILE = './runner/cfg/metro.yaml'
 
@@ -38,8 +39,9 @@ def convert_pipeline_transformation_dict_to_models(pipeline) -> TransformationCo
                                                pipeline["transformation"]["headers"],
                                                pipeline["transformation"]["params"])
     elif transfomation_type == 'container':
-        transformation = ContainerTransformationConfig(
-                                            pipeline["transformation"]["container-image"])
+        transformation = ContainerTransformationConfig(pipeline["transformation"]["container-image"])
+    elif transfomation_type == 'sql':
+        transformation = SQLTransformationCfg(pipeline["transformation"]["sql_query"])
     else:
         raise Exception(f'transformation type {transfomation_type} is not supported yet!')
 
