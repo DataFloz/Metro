@@ -12,7 +12,7 @@ CONFIGURATION_FILE = './runner/cfg/metro.yaml'
 
 def read_configuration_file()->MetroConfig:
     metro_config = {}
-    with open(CONFIGURATION_FILE, 'r') as stream:
+    with open(CONFIGURATION_FILE, 'r', encoding='utf-8') as stream:
         try:
             configuration_data=yaml.safe_load(stream)
             pipelines_config = \
@@ -21,33 +21,35 @@ def read_configuration_file()->MetroConfig:
             connectors_config = \
                 [convert_connector_dict_to_models(connector_yml)
                     for connector_yml in configuration_data['connectors']]
-          
-            metro_config = MetroConfig(configuration_data["name"], connectors_config, pipelines_config)
+
+            metro_config = MetroConfig(configuration_data["name"], connectors_config,
+                                        pipelines_config)
             
-        except yaml.YAMLError as e:
-            print(e)
+        except yaml.YAMLError as err:
+            print(err)
 
     return metro_config
 
 def convert_pipeline_transformation_dict_to_models(pipeline) -> TransformationConfig:
-    transfomationType = pipeline["transformation"]["type"]
-    print(f'transformationType {transfomationType}')
-    if transfomationType == 'http':
+    transfomation_type = pipeline["transformation"]["type"]
+    print(f'transformationType {transfomation_type}')
+    if transfomation_type == 'http':
         transformation = HttpTransformationCfg(pipeline["transformation"]["http_url"], 
                                                pipeline["transformation"]["headers"], 
                                                pipeline["transformation"]["params"])
-    elif transfomationType == 'container':
-        transformation = ContainerTransformationConfig(pipeline["transformation"]["container-image"])
+    elif transfomation_type == 'container':
+        transformation = ContainerTransformationConfig(
+                                            pipeline["transformation"]["container-image"])
     else:
-        raise Exception(f'transformation type {transfomationType} is not supported yet!')
+        raise Exception(f'transformation type {transfomation_type} is not supported yet!')
     
     return transformation
 
 def convert_pipeline_dict_to_models(pipeline):
     pipeline_config = PipelineConfig(name=pipeline["name"],
-                                     input=InputConfig(pipeline["input"]["topic"]),
-                                     output=OutputConfig(pipeline["output"]["topic"]),
-                                     transformation=convert_pipeline_transformation_dict_to_models(pipeline))
+                        input=InputConfig(pipeline["input"]["topic"]),
+                        output=OutputConfig(pipeline["output"]["topic"]),
+                        transformation=convert_pipeline_transformation_dict_to_models(pipeline))
 
     return pipeline_config
 

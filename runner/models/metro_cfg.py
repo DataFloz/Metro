@@ -1,8 +1,9 @@
+from typing import List
 from models.connector_cfg import ConnectorConfig
 from models.pipeline_config import PipelineConfig
 
 class MetroConfig:
-    def __init__(self, name, connectors: list[ConnectorConfig], pipelines: list[PipelineConfig]):
+    def __init__(self, name, connectors: List[ConnectorConfig], pipelines: List[PipelineConfig]):
         self.name = name
         self.connectors = connectors
         self.pipelines = pipelines
