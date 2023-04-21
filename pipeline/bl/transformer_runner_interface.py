@@ -1,4 +1,4 @@
-class iTransforerRunnerInterface:
+class TransforerRunnerInterface:
     def __init__(self):
         pass
 

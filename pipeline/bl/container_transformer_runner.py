@@ -1,10 +1,10 @@
 import json
 import docker
 
-from bl.iTransformerRunnerInterface import iTransforerRunnerInterface
+from bl.transformer_runner_interface import TransforerRunnerInterface
 
 
-class ContainerTransformer(iTransforerRunnerInterface):
+class ContainerTransformer(TransforerRunnerInterface):
     def __init__(self, image_name):
         # print("here we will initiate the transformer with the pipeline config")
         self.image_name = image_name

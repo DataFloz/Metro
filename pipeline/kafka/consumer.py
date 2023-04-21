@@ -1,10 +1,10 @@
 import config as cfg
 from confluent_kafka import Consumer, KafkaError, KafkaException
-from bl.iTransformerRunnerInterface import iTransforerRunnerInterface
+from bl.transformer_runner_interface import TransforerRunnerInterface
 from kafka.producer import KafkaProducer
 
 class KafkaConsumer:
-    def __init__(self, trasformer: iTransforerRunnerInterface, producer: KafkaProducer):
+    def __init__(self, trasformer: TransforerRunnerInterface, producer: KafkaProducer):
         print("connect to:" + cfg.kafka_config['bootstrap.servers'])
         conf = {
             'bootstrap.servers': cfg.kafka_config['bootstrap.servers'],

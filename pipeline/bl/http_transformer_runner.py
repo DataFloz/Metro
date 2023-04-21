@@ -1,10 +1,10 @@
 import json
 import requests
 
-from bl.iTransformerRunnerInterface import iTransforerRunnerInterface
+from bl.transformer_runner_interface import TransforerRunnerInterface
 
 
-class HttpTransformer(iTransforerRunnerInterface):
+class HttpTransformer(TransforerRunnerInterface):
     def __init__(self, http_url, headers={}, params={}):
         self.http_url = http_url
         self.headers = headers
