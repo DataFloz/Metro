@@ -7,12 +7,14 @@ app = Flask(__name__)
 
 @app.route('/api/pipelines')
 def get_pipelines():
+    '''Route for getting the metro configuration as json.'''
     metro_configuration = read_configuration_file()
 
     return jsonify(metro_configuration.as_dict())
 
 @app.route('/api/deploy-pipelines')
 def deploy_pipelines():
+    '''Route for rollout the current metro configuration.'''
     pipelines_configuration = read_configuration_file()
 
     print("run each pipeline with its configuration")

@@ -2,6 +2,7 @@ from models.transformation_cfg import TransformationConfig
 
 
 class SQLTransformationCfg(TransformationConfig):
+    '''Inhierent from TransformationConfig: responsible for SQL transformation config'''
     def __init__(self, sql_query):
         self.sql_query = sql_query
         self.type = 'sql'

@@ -3,6 +3,7 @@ from models.output_cfg import OutputConfig
 from models.transformation_cfg import TransformationConfig
 
 class PipelineConfig:
+    '''Class represent the pipeline configuration'''
     def __init__(self, name, input: InputConfig, output: OutputConfig,
                  transformation: TransformationConfig):
         self.name = name
@@ -11,6 +12,7 @@ class PipelineConfig:
         self.transformation = transformation
 
     def as_dict(self):
+        '''Function for convert config to dict'''
         return {
             'name': self.name,
             'input': self.input.as_dict(),

@@ -5,4 +5,3 @@ class TransformationConfig:
 
     def as_dict(self):
         ''' Abstract function for convert config to dict'''
-        pass
