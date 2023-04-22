@@ -4,6 +4,7 @@ from bl.transformer_runner_interface import TransforerRunnerInterface
 
 
 class SQLTransformer(TransforerRunnerInterface):
+    '''Inhierent from TransforerRunnerInterface: responsible for SQL transformation.'''
     def __init__(self, query):
         self.query = query
 

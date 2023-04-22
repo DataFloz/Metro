@@ -1,4 +1,5 @@
 class TransforerRunnerInterface:
+    '''Abstract class for transformation'''
     def __init__(self):
         pass
 

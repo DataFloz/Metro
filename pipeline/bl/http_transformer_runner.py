@@ -5,6 +5,7 @@ from bl.transformer_runner_interface import TransforerRunnerInterface
 
 
 class HttpTransformer(TransforerRunnerInterface):
+    '''Inhierent from TransforerRunnerInterface: responsible for HTTP transformation.'''
     def __init__(self, http_url, headers={}, params={}):
         self.http_url = http_url
         self.headers = headers

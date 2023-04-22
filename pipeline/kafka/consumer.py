@@ -4,6 +4,7 @@ from bl.transformer_runner_interface import TransforerRunnerInterface
 from kafka.producer import KafkaProducer
 
 class KafkaConsumer:
+    '''Class responsible of consumning and creating kafka consumer.'''
     def __init__(self, trasformer: TransforerRunnerInterface, producer: KafkaProducer):
         print("connect to:" + cfg.kafka_config['bootstrap.servers'])
         conf = {
@@ -18,6 +19,9 @@ class KafkaConsumer:
         self.running = False
 
     def consume(self, topics):
+        '''Function start the consuming
+            Args:
+                topic: string array of the topic to consume'''
         print(topics)
         self.running = True
         try:
@@ -46,4 +50,5 @@ class KafkaConsumer:
             self.consumer.close()
 
     def shutdown(self):
+        '''Function shutdown the consumer if needed'''
         self.running = False

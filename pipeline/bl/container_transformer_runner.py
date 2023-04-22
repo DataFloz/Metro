@@ -4,6 +4,7 @@ from bl.transformer_runner_interface import TransforerRunnerInterface
 
 
 class ContainerTransformer(TransforerRunnerInterface):
+    '''Inhierent from TransforerRunnerInterface: responsible for container transformation.'''
     def __init__(self, image_name):
         # print("here we will initiate the transformer with the pipeline config")
         self.image_name = image_name
@@ -13,7 +14,8 @@ class ContainerTransformer(TransforerRunnerInterface):
         client = docker.from_env()
         data_str = json.dumps(msg)
         data_str = f"'{msg}'"
-        container = client.containers.run(self.image_name,command=f"python main.py {data_str}", detach=True)
+        container = client.containers.run(self.image_name,command=f"python main.py {data_str}",
+                                            detach=True)
         container.wait()
         result = container.logs().decode('utf-8')
         print(f"res: {container.logs().decode('utf-8')}")
