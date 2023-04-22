@@ -1,9 +1,8 @@
 from api.router import app
-from configuration_reader import read_configuration_file
-from pipe_runner import run_pipeline
 
 
 def main():
+    ''' The main function is the runner entrypoint. '''
     print("runner api is up")
 
     port = 5000

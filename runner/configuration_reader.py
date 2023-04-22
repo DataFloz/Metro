@@ -12,8 +12,11 @@ from models.sql_transformation_cfg import SQLTransformationCfg
 CONFIGURATION_FILE = './runner/cfg/metro.yaml'
 
 def read_configuration_file()->MetroConfig:
+    '''Read Metro yml configuration file
+       Returns:
+        class object MetroConfig'''
     metro_config = {}
-    with open(CONFIGURATION_FILE, 'r') as stream:
+    with open(CONFIGURATION_FILE, 'r', encoding='utf-8') as stream:
         try:
             configuration_data=yaml.safe_load(stream)
             pipelines_config = \
@@ -22,40 +25,57 @@ def read_configuration_file()->MetroConfig:
             connectors_config = \
                 [convert_connector_dict_to_models(connector_yml)
                     for connector_yml in configuration_data['connectors']]
-          
-            metro_config = MetroConfig(configuration_data["name"], connectors_config, pipelines_config)
-            
-        except yaml.YAMLError as e:
-            print(e)
+
+            metro_config = MetroConfig(configuration_data["name"], connectors_config,
+                                        pipelines_config)
+
+        except yaml.YAMLError as err:
+            print(err)
 
     return metro_config
 
 def convert_pipeline_transformation_dict_to_models(pipeline) -> TransformationConfig:
-    transfomationType = pipeline["transformation"]["type"]
-    print(f'transformationType {transfomationType}')
-    if transfomationType == 'http':
-        transformation = HttpTransformationCfg(pipeline["transformation"]["http_url"], 
-                                               pipeline["transformation"]["headers"], 
+    '''Responsible to convert the transformation config
+       Args: 
+        pipeline: pipeline dict
+       Returns:
+        TranformationConfig object'''
+    transfomation_type = pipeline["transformation"]["type"]
+    print(f'transformationType {transfomation_type}')
+    if transfomation_type == 'http':
+        transformation = HttpTransformationCfg(pipeline["transformation"]["http_url"],
+                                               pipeline["transformation"]["headers"],
                                                pipeline["transformation"]["params"])
-    elif transfomationType == 'container':
-        transformation = ContainerTransformationConfig(pipeline["transformation"]["container-image"])
-    elif transfomationType == 'sql':
+    elif transfomation_type == 'container':
+        transformation = \
+                    ContainerTransformationConfig(pipeline["transformation"]["container-image"])
+    elif transfomation_type == 'sql':
         transformation = SQLTransformationCfg(pipeline["transformation"]["sql_query"])
     else:
-        raise Exception(f'transformation type {transfomationType} is not supported yet!')
-    
+        raise LookupError(f'transformation type {transfomation_type} is not supported yet!')
+
     return transformation
 
 def convert_pipeline_dict_to_models(pipeline):
+    '''Responsible to convert the pipline config
+       Args:
+        pipeline: dict
+       Returns:
+        PipelineConfig object'''
     pipeline_config = PipelineConfig(name=pipeline["name"],
-                                     input=InputConfig(pipeline["input"]["topic"]),
-                                     output=OutputConfig(pipeline["output"]["topic"]),
-                                     transformation=convert_pipeline_transformation_dict_to_models(pipeline))
+                        input=InputConfig(pipeline["input"]["topic"]),
+                        output=OutputConfig(pipeline["output"]["topic"]),
+                        transformation=convert_pipeline_transformation_dict_to_models(pipeline))
 
     return pipeline_config
 
 
 def convert_connector_dict_to_models(connector):
+    '''The function responsible to convert the connector config
+       Args:
+        connector dict
+       Returns:
+        ConnectorConfig object'''
     connector_config = ConnectorConfig(name=connector["name"],
                                        type=connector["type"],
                                        brokers=connector["brokers"],
