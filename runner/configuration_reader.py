@@ -12,6 +12,9 @@ from models.sql_transformation_cfg import SQLTransformationCfg
 CONFIGURATION_FILE = './runner/cfg/metro.yaml'
 
 def read_configuration_file()->MetroConfig:
+    '''Read Metro yml configuration file
+       Returns:
+        class object MetroConfig'''
     metro_config = {}
     with open(CONFIGURATION_FILE, 'r', encoding='utf-8') as stream:
         try:
@@ -32,6 +35,11 @@ def read_configuration_file()->MetroConfig:
     return metro_config
 
 def convert_pipeline_transformation_dict_to_models(pipeline) -> TransformationConfig:
+    '''Responsible to convert the transformation config
+       Args: 
+        pipeline: pipeline dict
+       Returns:
+        TranformationConfig object'''
     transfomation_type = pipeline["transformation"]["type"]
     print(f'transformationType {transfomation_type}')
     if transfomation_type == 'http':
@@ -49,6 +57,11 @@ def convert_pipeline_transformation_dict_to_models(pipeline) -> TransformationCo
     return transformation
 
 def convert_pipeline_dict_to_models(pipeline):
+    '''Responsible to convert the pipline config
+       Args:
+        pipeline: dict
+       Returns:
+        PipelineConfig object'''
     pipeline_config = PipelineConfig(name=pipeline["name"],
                         input=InputConfig(pipeline["input"]["topic"]),
                         output=OutputConfig(pipeline["output"]["topic"]),
@@ -58,6 +71,11 @@ def convert_pipeline_dict_to_models(pipeline):
 
 
 def convert_connector_dict_to_models(connector):
+    '''The function responsible to convert the connector config
+       Args:
+        connector dict
+       Returns:
+        ConnectorConfig object'''
     connector_config = ConnectorConfig(name=connector["name"],
                                        type=connector["type"],
                                        brokers=connector["brokers"],

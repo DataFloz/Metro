@@ -4,6 +4,7 @@ from kafka.producer import KafkaProducer
 from bl.transformation_builder import build_transformation
 
 def main():
+    ''' The main function is the pipeline entrypoint. '''
     print("start pipeline")
     transformer = build_transformation()
     producer = KafkaProducer(kafka_output_topic)
