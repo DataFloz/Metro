@@ -12,7 +12,6 @@ import RolloutMetro from "@/components/rollout-metro";
 
 export default function Home() {
   const [{ data, loading, error }] = useAxios<PipelineList>({
-    baseURL: "http://localhost:3000",
     url: "/api/pipelines",
   });
   const dataContext = useDataContext()

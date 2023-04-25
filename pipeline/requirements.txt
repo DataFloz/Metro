@@ -1,5 +1,4 @@
 confluent-kafka
 docker
 requests
-pysqlite3
 pandas

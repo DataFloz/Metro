@@ -1,13 +1,28 @@
 import { useDataContext } from "@/context/context";
 import { useRouter } from "next/router";
 import { Pipeline } from "../../models/pipeline";
-import { Input } from "@mantine/core";
+import { Button, Drawer, Input, Table } from "@mantine/core";
 import { Grid } from '@mantine/core';
 import ProduceTest from "@/components/test-message-dialog";
+import { useDisclosure } from "@mantine/hooks";
+import axios from "axios";
+import { useState } from "react";
 
 export default function Home() {
   const router = useRouter();
   const { pipeline } = router.query;
+  const [messagesDrawerOpened, { open, close }] = useDisclosure(false);
+  const [messages, setMessages] = useState([]);
+
+  const onOpenMessagesDrawer = async () => {
+    let currentPipeline = dataContext?.config.pipelines.filter(
+      (pipe) => pipe.name === pipeline
+    )[0]
+    const results = await axios.post('/api/transformed-messages', 
+                                    {pipeline: currentPipeline, kafkaConnector:dataContext!.config.connectors[0]});
+    setMessages(results.data.transformedMessages);
+    open();
+  } 
 
   const getInputValue = (key:string, value: string) => {
     return (
@@ -59,8 +74,23 @@ export default function Home() {
         <>
           {iterate(currentPipeline)}
           <Grid m={15}>
-            <ProduceTest pipeline={currentPipeline} kafkaConnector={dataContext!.config.connectors[0]}></ProduceTest>
+            <Grid.Col span={2}>
+              <ProduceTest pipeline={currentPipeline} kafkaConnector={dataContext!.config.connectors[0]}></ProduceTest>
+            </Grid.Col>
+            <Grid.Col span={2}>
+              <Button onClick={onOpenMessagesDrawer}>Show transfomed messages</Button>
+            </Grid.Col>
           </Grid>
+          <Drawer opened={messagesDrawerOpened} onClose={close} title="Transformed messages">
+            <Table>
+              {messages.map((m: any) => 
+                (<tr key={m.timestamp}>
+                  <td>{m.timestamp}</td>
+                  <td>{m.value}</td>
+                </tr>)
+              )}
+            </Table>
+          </Drawer>
         </> : ""}
     </>
   );
