@@ -7,24 +7,24 @@ connectors:
     group_id: 'some-group-id'
 pipelines:
   -
-    name: 'sample-first-pipeline'
+    name: 'calculate-fullname'
     input:
       type: 'kafka'
-      topic: 'some-in-topic'
+      topic: 'persons'
     output:
       type: 'kafka'
-      topic: 'some-out-topic'
+      topic: 'persons-with-full-name'
     transformation:
       type: 'sql'
-      sql_query: 'SELECT * FROM msg WHERE name = "ofir"'
+      sql_query: 'SELECT *, first_name || " " || last_name as full_name FROM msg'
   -
-    name: 'sample-second-pipeline'
+    name: 'calculate-is-adult'
     input:
       type: 'kafka'
-      topic: 'some-out-topic'
+      topic: 'persons-with-full-name'
     output:
       type: 'kafka'
-      topic: 'some-second-out-topic'
+      topic: 'persons-with-full-name-is-adult'
     transformation:
       type: 'sql'
-      sql_query: 'SELECT * FROM msg WHERE age > 18'
+      sql_query: 'SELECT *, age > 18 as is_adult FROM msg'

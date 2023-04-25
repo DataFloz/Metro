@@ -12,17 +12,13 @@ const getMessages = async (pipeline: Pipeline, connector: Connector) => {
     clientId: 'test-client',
     brokers: [...connector.brokers.split(',')]
   })
-
-  if(!topicsMessagesDictionary[pipeline.output.topic]){
-    topicsMessagesDictionary[pipeline.output.topic] = []
-  }
-
-  messages = topicsMessagesDictionary[pipeline.output.topic]
-
+  
   const consumer = kafka.consumer({ groupId: 'reader' })
   await consumer.connect()
   await consumer.subscribe({ topics: [pipeline.output.topic], fromBeginning: true })
-  console.log("retrieve messages!")
+
+  topicsMessagesDictionary[pipeline.output.topic] = []
+
   consumer.run({
     autoCommit: false,
     eachMessage: async ({ topic, partition, message }) => {
@@ -35,8 +31,6 @@ const getMessages = async (pipeline: Pipeline, connector: Connector) => {
       topicsMessagesDictionary[pipeline.output.topic].push({ timestamp: message.timestamp, value: message.value ? message.value.toString() : "null" })
     },
   });
-
-  return messages;
 }
 
 export default async function handler(
@@ -47,7 +41,13 @@ export default async function handler(
     const pipeline = req.body.pipeline as Pipeline
     const connector = req.body.kafkaConnector as Connector
 
-    const messages = await getMessages(pipeline, connector);
+    if(!topicsMessagesDictionary[pipeline.output.topic]){
+      topicsMessagesDictionary[pipeline.output.topic] = []
+    }
+  
+    const messages = topicsMessagesDictionary[pipeline.output.topic]
+
+    getMessages(pipeline, connector);
 
     res.status(200).json({ transformedMessages: messages })
   } else {
