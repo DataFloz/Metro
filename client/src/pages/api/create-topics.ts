@@ -22,7 +22,7 @@ export default async function handler(
 
         const admin = kafka.admin()
         const topics = Array.from(new Set(pipelines.map(p => p.input.topic)))
-        await admin.deleteTopics({topics: topics})
+        // await admin.deleteTopics({topics: topics})
         await admin.createTopics({topics: topics.map(x => ({topic: x})), waitForLeaders: false})
 
         res.status(200).json({result:'succeed'})   
