@@ -1,16 +1,16 @@
 import json
 import docker
+import logging
 from bl.transformer_runner_interface import TransforerRunnerInterface
 
 
 class ContainerTransformer(TransforerRunnerInterface):
     '''Inhierent from TransforerRunnerInterface: responsible for container transformation.'''
     def __init__(self, image_name):
-        # print("here we will initiate the transformer with the pipeline config")
         self.image_name = image_name
 
     def run_logic(self, msg):
-        print("run the specific FAAS logic and return the result")
+        logging.info("run the container transformer logic")
         client = docker.from_env()
         data_str = json.dumps(msg)
         data_str = f"'{msg}'"
@@ -18,6 +18,6 @@ class ContainerTransformer(TransforerRunnerInterface):
                                             detach=True)
         container.wait()
         result = container.logs().decode('utf-8')
-        print(f"res: {container.logs().decode('utf-8')}")
+        logging.debug(f"res: {container.logs().decode('utf-8')}")
 
         return result

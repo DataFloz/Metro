@@ -1,4 +1,5 @@
 import yaml
+import logging
 from models.pipeline_config import PipelineConfig
 from models.input_cfg import InputConfig
 from models.output_cfg import OutputConfig
@@ -28,9 +29,8 @@ def read_configuration_file()->MetroConfig:
 
             metro_config = MetroConfig(configuration_data["name"], connectors_config,
                                         pipelines_config)
-
         except yaml.YAMLError as err:
-            print(err)
+            logging.error(err)
 
     return metro_config
 
@@ -41,7 +41,7 @@ def convert_pipeline_transformation_dict_to_models(pipeline) -> TransformationCo
        Returns:
         TranformationConfig object'''
     transfomation_type = pipeline["transformation"]["type"]
-    print(f'transformationType {transfomation_type}')
+    logging.debug(f'transformationType {transfomation_type}')
     if transfomation_type == 'http':
         transformation = HttpTransformationCfg(pipeline["transformation"]["http_url"],
                                                pipeline["transformation"]["headers"],

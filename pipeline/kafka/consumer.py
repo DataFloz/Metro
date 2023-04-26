@@ -1,3 +1,4 @@
+import logging
 import config as cfg
 from confluent_kafka import Consumer, KafkaError, KafkaException
 from bl.transformer_runner_interface import TransforerRunnerInterface
@@ -6,7 +7,7 @@ from kafka.producer import KafkaProducer
 class KafkaConsumer:
     '''Class responsible of consumning and creating kafka consumer.'''
     def __init__(self, trasformer: TransforerRunnerInterface, producer: KafkaProducer):
-        print("connect to:" + cfg.kafka_config['bootstrap.servers'])
+        logging.info(f"connect to: {cfg.kafka_config['bootstrap.servers']}")
         conf = {
             'bootstrap.servers': cfg.kafka_config['bootstrap.servers'],
             'group.id': cfg.kafka_config['group.id'],
@@ -22,7 +23,7 @@ class KafkaConsumer:
         '''Function start the consuming
             Args:
                 topic: string array of the topic to consume'''
-        print(topics)
+        logging.info(f"start consume topics: {topics}")
         self.running = True
         try:
             self.consumer.subscribe(topics)
@@ -35,17 +36,17 @@ class KafkaConsumer:
                 if msg.error():
                     if msg.error().code() == KafkaError._PARTITION_EOF:
                         # End of partition event
-                        print(f"{msg.topic()} {msg.partition()} \
+                        logging.debug(f"{msg.topic()} {msg.partition()} \
                               reached end at offset {msg.offset()}\n")
                     elif msg.error():
                         raise KafkaException(msg.error())
                 else:
                     # msg_process(msg)
-                    print("some msg pocess")
+                    logging.debug("process message")
                     results = self.transformer.run_logic(msg)
-                    print("some msg produce")
+                    logging.debug("produce message")
                     self.producer.produce(results)
-                    print("end msg pipeline")
+                    logging.debug("end message pipeline")
         finally:
             self.consumer.close()
 
