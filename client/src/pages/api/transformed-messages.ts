@@ -11,7 +11,7 @@ const getMessages = async (pipeline: Pipeline, connector: Connector) => {
     brokers: [...connector.brokers.split(',')]
   })
 
-  console.log(123123123)
+  console.log("start get messages")
   const promise = new Promise(async (resolve, reject) => {
     if (!consumer) {
       consumer = kafka.consumer({ groupId: 'reader' })
@@ -22,7 +22,6 @@ const getMessages = async (pipeline: Pipeline, connector: Connector) => {
         eachBatchAutoResolve: false,
         autoCommit: false,
         eachBatch: async ({ batch, resolveOffset, heartbeat }) => {
-          console.log("start!!!!")
           const messages:{timestamp: string; value: string | undefined; }[] = []
           for (let message of batch.messages) {
             console.log({
@@ -57,7 +56,7 @@ export default async function handler(
     const messages = await getMessages(pipeline, connector);
 
     if(consumer){
-      console.log("stop!!!")
+      console.log("retrived messages")
       await consumer.disconnect();
       consumer = null;  
     }
