@@ -1,9 +1,9 @@
-import logging
+from utils.logger import logger
 from api.router import app
 
 def main():
     ''' The main function is the runner entrypoint. '''
-    logging.info("runner api is up")
+    logger.info("runner api is up")
 
     port = 5000
     if __name__ == '__main__':

@@ -1,5 +1,5 @@
 import json
-import logging
+from utils.logger import logger
 from confluent_kafka import Producer
 import config as cfg
 
@@ -20,9 +20,9 @@ class KafkaProducer():
                 err: if the produce failed
                 msg: the msg that produced'''
         if err is not None:
-            logging.error(f"Failed to deliver message: {str(msg)}: {str(err)}")
+            logger.error(f"Failed to deliver message: {str(msg)}: {str(err)}")
         else:
-            logging.error(f"Message produced: {str(msg)}")
+            logger.error(f"Message produced: {str(msg)}")
 
     def produce(self, values):
         '''Function produce msg

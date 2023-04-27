@@ -1,36 +1,49 @@
-import { Kafka } from 'kafkajs'
+import { Consumer, Kafka } from 'kafkajs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Pipeline } from '@/models/pipeline';
 import { Connector } from '@/models/connector';
 
-const topicsMessagesDictionary: { [key: string]: {timestamp: string; value: string | undefined; }[]} = {}
+let consumer: Consumer | null = null;
 
 const getMessages = async (pipeline: Pipeline, connector: Connector) => {
-  let messages: { timestamp: string; value: string | undefined; }[] = []
-
   const kafka = new Kafka({
     clientId: 'test-client',
     brokers: [...connector.brokers.split(',')]
   })
-  
-  const consumer = kafka.consumer({ groupId: 'reader' })
-  await consumer.connect()
-  await consumer.subscribe({ topics: [pipeline.output.topic], fromBeginning: true })
 
-  topicsMessagesDictionary[pipeline.output.topic] = []
+  console.log(123123123)
+  const promise = new Promise(async (resolve, reject) => {
+    if (!consumer) {
+      consumer = kafka.consumer({ groupId: 'reader' })
+      await consumer.connect()
+      await consumer.subscribe({ topics: [pipeline.output.topic], fromBeginning: true })
 
-  consumer.run({
-    autoCommit: false,
-    eachMessage: async ({ topic, partition, message }) => {
-      console.log({
-        topic,
-        partition,
-        offset: message.offset,
-        value: message.value ? message.value.toString() : "null",
-      });
-      topicsMessagesDictionary[pipeline.output.topic].push({ timestamp: message.timestamp, value: message.value ? message.value.toString() : "null" })
-    },
+      consumer.run({
+        eachBatchAutoResolve: false,
+        autoCommit: false,
+        eachBatch: async ({ batch, resolveOffset, heartbeat }) => {
+          console.log("start!!!!")
+          const messages:{timestamp: string; value: string | undefined; }[] = []
+          for (let message of batch.messages) {
+            console.log({
+              value: message.value ? message.value.toString() : "null",
+              partition: batch.partition,
+              offset: message.offset,
+              timestamp: message.timestamp,
+            })
+            messages.push({ timestamp: message.timestamp, value: message.value ? message.value.toString() : "null" })
+          }
+
+          resolve(messages)
+        },
+      })
+      .catch(err => reject(err))
+    }else{
+      resolve(undefined);
+    }
   });
+
+  return await promise;
 }
 
 export default async function handler(
@@ -41,14 +54,14 @@ export default async function handler(
     const pipeline = req.body.pipeline as Pipeline
     const connector = req.body.kafkaConnector as Connector
 
-    if(!topicsMessagesDictionary[pipeline.output.topic]){
-      topicsMessagesDictionary[pipeline.output.topic] = []
+    const messages = await getMessages(pipeline, connector);
+
+    if(consumer){
+      console.log("stop!!!")
+      await consumer.disconnect();
+      consumer = null;  
     }
-  
-    const messages = topicsMessagesDictionary[pipeline.output.topic]
-
-    getMessages(pipeline, connector);
-
+    
     res.status(200).json({ transformedMessages: messages })
   } else {
     res.status(405)

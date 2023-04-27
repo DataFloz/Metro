@@ -1,6 +1,6 @@
 import json
 import docker
-import logging
+from utils.logger import logger
 from bl.transformer_runner_interface import TransforerRunnerInterface
 
 
@@ -10,7 +10,7 @@ class ContainerTransformer(TransforerRunnerInterface):
         self.image_name = image_name
 
     def run_logic(self, msg):
-        logging.info("run the container transformer logic")
+        logger.info("run the container transformer logic")
         client = docker.from_env()
         data_str = json.dumps(msg)
         data_str = f"'{msg}'"
@@ -18,6 +18,6 @@ class ContainerTransformer(TransforerRunnerInterface):
                                             detach=True)
         container.wait()
         result = container.logs().decode('utf-8')
-        logging.debug(f"res: {container.logs().decode('utf-8')}")
+        logger.debug(f"res: {container.logs().decode('utf-8')}")
 
         return result

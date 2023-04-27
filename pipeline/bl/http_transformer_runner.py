@@ -1,6 +1,6 @@
 import json
 import requests
-import logging
+from utils.logger import logger
 from bl.transformer_runner_interface import TransforerRunnerInterface
 
 
@@ -12,10 +12,10 @@ class HttpTransformer(TransforerRunnerInterface):
         self.params = params
 
     def run_logic(self, msg):
-        logging.info("run the HTTP transformer logic")
+        logger.info("run the HTTP transformer logic")
         json_msg = json.dumps(msg)
         reponse = requests.post(self.http_url, params=self.params,json=json_msg,
                                 headers=self.headers, timeout=60)
-        logging.debug(f"res: {reponse.json()}")
+        logger.debug(f"res: {reponse.json()}")
 
         return reponse.json()
