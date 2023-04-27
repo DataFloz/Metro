@@ -41,7 +41,7 @@ def convert_pipeline_transformation_dict_to_models(pipeline) -> TransformationCo
        Returns:
         TranformationConfig object'''
     transfomation_type = pipeline["transformation"]["type"]
-    logger.debug(f'transformationType {transfomation_type}')
+    logger.debug("transformationType %s", transfomation_type)
     if transfomation_type == 'http':
         transformation = HttpTransformationCfg(pipeline["transformation"]["http_url"],
                                                pipeline["transformation"]["headers"],

@@ -13,7 +13,7 @@ class SQLTransformer(TransforerRunnerInterface):
     def run_logic(self, msg):
         logger.info("run the SQL transformer logic")
         msg_value = msg.value()
-        encode_msg_value = (msg_value.decode('utf-8'))
+        encode_msg_value = msg_value.decode('utf-8')
         message_data = ast.literal_eval(encode_msg_value)
         data_frame = pd.DataFrame.from_dict([message_data])
         conn = sqlite3.connect(":memory:")
@@ -22,6 +22,6 @@ class SQLTransformer(TransforerRunnerInterface):
         data_frame.to_sql('msg', conn, index=False)
 
         query_result = pd.read_sql_query(self.query, conn)
-        logger.debug(f"result of logic run: {query_result}")
+        logger.debug("result of logic run: %s", query_result)
 
         return query_result.to_dict(orient="records")

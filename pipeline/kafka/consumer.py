@@ -23,7 +23,7 @@ class KafkaConsumer:
         '''Function start the consuming
             Args:
                 topic: string array of the topic to consume'''
-        logger.info(f"start consume topics: {topics}")
+        logger.info("start consume topics: %s", topics)
         self.running = True
         try:
             self.consumer.subscribe(topics)
@@ -36,8 +36,8 @@ class KafkaConsumer:
                 if msg.error():
                     if msg.error().code() == KafkaError._PARTITION_EOF:
                         # End of partition event
-                        logger.debug(f"{msg.topic()} {msg.partition()} \
-                              reached end at offset {msg.offset()}\n")
+                        logger.debug("%s %s  \
+                              reached end at offset {msg.offset()}\n", msg.topic(), msg.partition())
                     elif msg.error():
                         raise KafkaException(msg.error())
                 else:

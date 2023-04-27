@@ -16,6 +16,6 @@ class HttpTransformer(TransforerRunnerInterface):
         json_msg = json.dumps(msg)
         reponse = requests.post(self.http_url, params=self.params,json=json_msg,
                                 headers=self.headers, timeout=60)
-        logger.debug(f"res: {reponse.json()}")
+        logger.debug("res: %s", reponse.json())
 
         return reponse.json()

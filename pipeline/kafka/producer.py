@@ -20,9 +20,9 @@ class KafkaProducer():
                 err: if the produce failed
                 msg: the msg that produced'''
         if err is not None:
-            logger.error(f"Failed to deliver message: {str(msg)}: {str(err)}")
+            logger.error("Failed to deliver message: %s:%s", str(msg), str(err))
         else:
-            logger.error(f"Message produced: {str(msg)}")
+            logger.error("Message produced: %s", str(msg))
 
     def produce(self, values):
         '''Function produce msg
@@ -30,6 +30,8 @@ class KafkaProducer():
                 value: the value that will be produce'''
         if isinstance(values, list):
             for value in values:
-                self.producer.produce(self.topic, key=None, value=json.dumps(value, default=str), callback=self.produced_callback)
+                self.producer.produce(self.topic, key=None, value=json.dumps(value, default=str),
+                                      callback=self.produced_callback)
         else:
-                self.producer.produce(self.topic, key=None, value=json.dumps(values, default=str), callback=self.produced_callback)
+            self.producer.produce(self.topic, key=None, value=json.dumps(values, default=str), 
+                                      callback=self.produced_callback)

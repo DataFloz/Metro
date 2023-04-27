@@ -18,6 +18,6 @@ class ContainerTransformer(TransforerRunnerInterface):
                                             detach=True)
         container.wait()
         result = container.logs().decode('utf-8')
-        logger.debug(f"res: {container.logs().decode('utf-8')}")
+        logger.debug("res: %s", container.logs().decode('utf-8'))
 
         return result
