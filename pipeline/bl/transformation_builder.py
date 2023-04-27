@@ -18,6 +18,6 @@ def build_transformation():
     elif transformation_type == 'sql':
         transformation = SQLTransformer(transformation['sql_query'])
     else:
-        raise Exception(f'transformation type {transformation_type} is not supported yet!')
+        raise LookupError(f'transformation type {transformation_type} is not supported yet!')
 
     return transformation
