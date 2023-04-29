@@ -24,4 +24,5 @@ def run_pipeline(pipeline_configuration: PipelineConfig, kafka_connector: Connec
                           environment=envs_dict,
                           network='metro_devcontainer_default',
                           name=pipeline_configuration.name,
+                          volumes={'./runner/cfg/': {'bind': '/mnt/configs/', 'mode': 'ro'}},
                           detach=True)

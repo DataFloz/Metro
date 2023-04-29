@@ -57,6 +57,8 @@ export default function Home() {
               return getInputValue('HTTP url', value.http_url)
             case 'sql':
               return getInputValue('SQL query', value.sql_query)
+            case 'pickle':
+              return getInputValue('pickle file name', value.file_name)
             default:
               break;
           }
