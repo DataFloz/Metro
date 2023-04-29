@@ -3,12 +3,13 @@ from utils.logger import logger
 from models.pipeline_config import PipelineConfig
 from models.input_cfg import InputConfig
 from models.output_cfg import OutputConfig
-from models.transformation_cfg import TransformationConfig
+from models.transformations.transformation_cfg import TransformationConfig
 from models.connector_cfg import ConnectorConfig
 from models.metro_cfg import MetroConfig
-from models.container_transformation_cfg import ContainerTransformationConfig
-from models.http_transformation_cfg import HttpTransformationCfg
-from models.sql_transformation_cfg import SQLTransformationCfg
+from models.transformations.container_transformation_cfg import ContainerTransformationConfig
+from models.transformations.http_transformation_cfg import HttpTransformationCfg
+from models.transformations.sql_transformation_cfg import SQLTransformationCfg
+from models.transformations.pickle_transformation_cfg import PickleTransformationCfg
 
 CONFIGURATION_FILE = './runner/cfg/metro.yaml'
 
@@ -51,6 +52,8 @@ def convert_pipeline_transformation_dict_to_models(pipeline) -> TransformationCo
                     ContainerTransformationConfig(pipeline["transformation"]["container-image"])
     elif transfomation_type == 'sql':
         transformation = SQLTransformationCfg(pipeline["transformation"]["sql_query"])
+    elif transfomation_type == 'pickle':
+        transformation = PickleTransformationCfg(pipeline["transformation"]["file_name"])
     else:
         raise LookupError(f'transformation type {transfomation_type} is not supported yet!')
 

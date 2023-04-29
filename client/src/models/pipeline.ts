@@ -2,7 +2,7 @@ export interface Pipeline{
     name: string;
     input: InputModel;
     output: Output;
-    transformation: ContainerTransformation | HttpTransormation | SQLTransormation;
+    transformation: ContainerTransformation | HttpTransormation | SQLTransormation | PickleTransormation;
 }
 
 export interface InputModel {
@@ -12,7 +12,7 @@ export interface InputModel {
 export interface Output {
     topic: string
 }
-export type transformationType = 'http' | 'container' | 'sql'
+export type transformationType = 'http' | 'container' | 'sql' | 'pickle'
 
 export interface transformation {
     type: transformationType
@@ -29,4 +29,8 @@ export interface HttpTransormation extends transformation {
 
 export interface SQLTransormation extends transformation {
     sql_query: string;
+}
+
+export interface PickleTransormation extends transformation {
+    file_name: string;
 }

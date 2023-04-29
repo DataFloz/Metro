@@ -1,6 +1,6 @@
 from models.input_cfg import InputConfig
 from models.output_cfg import OutputConfig
-from models.transformation_cfg import TransformationConfig
+from models.transformations.transformation_cfg import TransformationConfig
 
 class PipelineConfig:
     '''Class represent the pipeline configuration'''

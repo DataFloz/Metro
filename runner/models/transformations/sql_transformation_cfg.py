@@ -1,4 +1,4 @@
-from models.transformation_cfg import TransformationConfig
+from models.transformations.transformation_cfg import TransformationConfig
 
 
 class SQLTransformationCfg(TransformationConfig):
