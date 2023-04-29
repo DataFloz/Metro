@@ -15,11 +15,10 @@ class PickleTransformer(TransforerRunnerInterface):
         encode_msg_value = msg_value.decode('utf-8')
         message_data = ast.literal_eval(encode_msg_value)
 
-        with open(f"/mnt/configs/{self.file_name}", 'rb') as f:
-            model = pickle.load(f)
+        with open(f"/mnt/configs/{self.file_name}", 'rb') as file:
+            model = pickle.load(file)
             message_data["predict"] = model.predict(message_data)
 
-      
         logger.debug("result of logic run: %s", message_data)
 
         return message_data
