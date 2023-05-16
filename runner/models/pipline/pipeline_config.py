@@ -1,7 +1,8 @@
 from models.pipline.input_cfg import InputConfig
 from models.pipline.output_cfg import OutputConfig
 from models.pipline.transformations.transformation_cfg import TransformationConfig
-from models.pipline.transformations.transformation_cfg_builder import from_config_dict as convert_transformation_config
+from models.pipline.transformations.transformation_cfg_builder \
+    import from_config_dict as convert_transformation_config
 
 class PipelineConfig:
     '''Class represent the pipeline configuration'''
@@ -34,4 +35,3 @@ class PipelineConfig:
                         transformation=convert_transformation_config(pipeline_dict))
 
         return pipeline_config
-    

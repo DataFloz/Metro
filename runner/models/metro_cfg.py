@@ -1,8 +1,10 @@
 from typing import List
 from models.connector_cfg import ConnectorConfig
 from models.pipline.pipeline_config import PipelineConfig
-from models.infrastructure_runner.pipeline_infrastructure_runner import PipelineInfrastructureRunner
-from models.infrastructure_runner.pipeline_infra_runner_cfg_builder import from_config_dict as pipeline_infra_convert
+from models.infrastructure_runner.pipeline_infrastructure_runner \
+    import PipelineInfrastructureRunner
+from models.infrastructure_runner.pipeline_infra_runner_cfg_builder \
+    import from_config_dict as pipeline_infra_convert
 
 class MetroConfig:
     '''Class represent the metro configuration'''
@@ -39,5 +41,5 @@ class MetroConfig:
 
         metro_config = MetroConfig(metro_dict["name"], connectors_config,
                                         pipelines_config, pipeline_infrastructure_runner)
-        
+
         return metro_config
