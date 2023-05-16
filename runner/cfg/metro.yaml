@@ -1,4 +1,6 @@
 name: 'sample-config'
+running_infrastructure:
+  infrustructure_type: container
 connectors:
   -
     name: 'local-kafka-connector'
@@ -28,3 +30,26 @@ pipelines:
     transformation:
       type: 'sql'
       sql_query: 'SELECT *, age > 18 as is_adult FROM msg'
+  -
+    name: 'filter-only-abults'
+    input:
+      type: 'kafka'
+      topic: 'persons-with-full-name-is-adult'
+    output:
+      type: 'kafka'
+      topic: 'persons-only-adults'
+    transformation:
+      type: 'sql'
+      sql_query: 'SELECT * FROM msg WHERE is_adult'
+  -
+    name: 'calculate-with-ML'
+    input:
+      type: 'kafka'
+      topic: 'persons-with-full-name'
+    output:
+      type: 'kafka'
+      topic: 'persons-with-ml'
+    transformation:
+      type: 'pickle'
+      file_name: 'test.pkl'
+    

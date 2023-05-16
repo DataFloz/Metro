@@ -1,6 +1,6 @@
 import docker
 from docker.errors import NotFound
-from models.pipeline_config import PipelineConfig
+from models.pipline.pipeline_config import PipelineConfig
 from models.connector_cfg import ConnectorConfig
 
 def run_pipeline(pipeline_configuration: PipelineConfig, kafka_connector: ConnectorConfig):

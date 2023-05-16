@@ -21,9 +21,9 @@ As you consider potential FAAS stream solutions for your business, it's importan
 
 **There are several pipeline type each one use different approch to transform the data:**
 - SQL (To transform data using SQL query with no efforts)
-- container (To run in you own custom environment)
-- HTTP (To use already existing logic within your new pipeline)
 - pickle (To analyze predictions and ML capality on your data with no efforts)
+- HTTP (To use already existing logic within your new pipeline)
+- container (To run in you own custom environment)
 
 ### Features:
 <img width="942" alt="image" src="https://user-images.githubusercontent.com/17068656/230864948-eb1f67d7-5627-462b-aa3b-25091f5395d2.png">
@@ -38,5 +38,3 @@ Container transformer:
 HTTP transformer:
 
 <img width="197" alt="image" src="https://user-images.githubusercontent.com/17068656/230865901-a4c2cde4-c5a0-47e5-b27a-6fb2063d32b1.png">
-
-

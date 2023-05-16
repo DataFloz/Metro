@@ -1,4 +1,4 @@
-from models.transformations.transformation_cfg import TransformationConfig
+from models.pipline.transformations.transformation_cfg import TransformationConfig
 
 
 class SQLTransformationCfg(TransformationConfig):
