@@ -1,15 +1,16 @@
 import yaml
 from utils.logger import logger
-from models.pipeline_config import PipelineConfig
-from models.input_cfg import InputConfig
-from models.output_cfg import OutputConfig
-from models.transformations.transformation_cfg import TransformationConfig
+from models.pipline.pipeline_config import PipelineConfig
+from models.pipline.input_cfg import InputConfig
+from models.pipline.output_cfg import OutputConfig
+from models.pipline.transformations.transformation_cfg import TransformationConfig
 from models.connector_cfg import ConnectorConfig
 from models.metro_cfg import MetroConfig
-from models.transformations.container_transformation_cfg import ContainerTransformationConfig
-from models.transformations.http_transformation_cfg import HttpTransformationCfg
-from models.transformations.sql_transformation_cfg import SQLTransformationCfg
-from models.transformations.pickle_transformation_cfg import PickleTransformationCfg
+from models.pipline.transformations.container_transformation_cfg import ContainerTransformationConfig
+from models.pipline.transformations.http_transformation_cfg import HttpTransformationCfg
+from models.pipline.transformations.sql_transformation_cfg import SQLTransformationCfg
+from models.pipline.transformations.pickle_transformation_cfg import PickleTransformationCfg
+from models.infrastructure_runner.pipeline_infra_runner_cfg_builder import from_config_dict as pipeline_infra_convert
 
 CONFIGURATION_FILE = './runner/cfg/metro.yaml'
 
@@ -21,67 +22,8 @@ def read_configuration_file()->MetroConfig:
     with open(CONFIGURATION_FILE, 'r', encoding='utf-8') as stream:
         try:
             configuration_data=yaml.safe_load(stream)
-            pipelines_config = \
-                [convert_pipeline_dict_to_models(pipeline_yml)
-                    for pipeline_yml in configuration_data['pipelines']]
-            connectors_config = \
-                [convert_connector_dict_to_models(connector_yml)
-                    for connector_yml in configuration_data['connectors']]
-
-            metro_config = MetroConfig(configuration_data["name"], connectors_config,
-                                        pipelines_config)
+            metro_config = MetroConfig.from_config_dict(configuration_data)
         except yaml.YAMLError as err:
             logger.error(err)
 
     return metro_config
-
-def convert_pipeline_transformation_dict_to_models(pipeline) -> TransformationConfig:
-    '''Responsible to convert the transformation config
-       Args: 
-        pipeline: pipeline dict
-       Returns:
-        TranformationConfig object'''
-    transfomation_type = pipeline["transformation"]["type"]
-    logger.debug("transformationType %s", transfomation_type)
-    if transfomation_type == 'http':
-        transformation = HttpTransformationCfg(pipeline["transformation"]["http_url"],
-                                               pipeline["transformation"]["headers"],
-                                               pipeline["transformation"]["params"])
-    elif transfomation_type == 'container':
-        transformation = \
-                    ContainerTransformationConfig(pipeline["transformation"]["container-image"])
-    elif transfomation_type == 'sql':
-        transformation = SQLTransformationCfg(pipeline["transformation"]["sql_query"])
-    elif transfomation_type == 'pickle':
-        transformation = PickleTransformationCfg(pipeline["transformation"]["file_name"])
-    else:
-        raise LookupError(f'transformation type {transfomation_type} is not supported yet!')
-
-    return transformation
-
-def convert_pipeline_dict_to_models(pipeline):
-    '''Responsible to convert the pipline config
-       Args:
-        pipeline: dict
-       Returns:
-        PipelineConfig object'''
-    pipeline_config = PipelineConfig(name=pipeline["name"],
-                        input=InputConfig(pipeline["input"]["topic"]),
-                        output=OutputConfig(pipeline["output"]["topic"]),
-                        transformation=convert_pipeline_transformation_dict_to_models(pipeline))
-
-    return pipeline_config
-
-
-def convert_connector_dict_to_models(connector):
-    '''The function responsible to convert the connector config
-       Args:
-        connector dict
-       Returns:
-        ConnectorConfig object'''
-    connector_config = ConnectorConfig(name=connector["name"],
-                                       type=connector["type"],
-                                       brokers=connector["brokers"],
-                                       group_id=connector["group_id"])
-
-    return connector_config
