@@ -9,22 +9,24 @@ interface GraphProps {
 }
 
 export default function PipelinesGraph({ pipelines }: GraphProps) {
-  const [edges, setEdges] = useState<{ from: string; to: string; }[]>([])
+  const [edges, setEdges] = useState<any[]>([])
   const [nodes, setNodes] = useState<{ id: string; label: string; title: string; }[]>([])
   let [graphKey, setGraphKey] = useState(uuid())
   const { push } = useRouter();
 
-  useEffect(()=>{
-    const routes: { from: string; to: string; }[] = []
+  useEffect(() => {
+    const routes: any[] = []
     pipelines.forEach(p => {
       const nextPipelines = pipelines.filter((x) => x.input.topic == p.output.topic)
       nextPipelines.forEach(x => {
-        routes.push( { from: p.name, to: x.name })
+        routes.push({
+          from: p.name, to: x.name
+        })
       })
     });
 
     setEdges(routes);
-    setNodes(pipelines.map(p => ({id: p.name, label: p.name, title: p.name})))
+    setNodes(pipelines.map(p => ({ id: p.name, label: p.name, title: p.name, group: p.transformation.type })))
     setGraphKey(uuid())
   }, [])
 
@@ -34,13 +36,35 @@ export default function PipelinesGraph({ pipelines }: GraphProps) {
   });
 
   const options = {
-    height: "400px"
+    height: "400px",
+    physics: {
+      enabled: true,
+      hierarchicalRepulsion: {
+        avoidOverlap: 3,
+      },
+    },
+    layout: {
+      hierarchical: {
+        direction: "LR",
+        sortMethod: "directed",
+      },
+    },
+    nodes: {
+      shape: "dot",
+      size: 15,
+    },
+    edges: {
+      smooth: {
+        type: "continuous",
+      },
+      arrows: { to: true },
+    },
   };
 
   const events = {
-    select: function(event: { nodes: any; edges: any; }) {
+    select: function (event: { nodes: any; edges: any; }) {
       const { nodes, edges } = event;
-      if(nodes && nodes.length)
+      if (nodes && nodes.length)
         push(`/pipeline/${nodes[0]}`)
     }
   };
