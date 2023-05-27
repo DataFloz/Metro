@@ -40,7 +40,8 @@ class KubernetesRunner(AbstractRunner):
     def __init__(self):
         super().__init__()
         # Load the Kubernetes configuration.
-        config.load_kube_config(config_dict=kubeconfig)
+        # config.load_kube_config(config_dict=kubeconfig)
+        config.load_kube_config()
         self.api = client.CoreV1Api()
 
     def rollout(self, pipeline_configuration: PipelineConfig, kafka_connector: ConnectorConfig):

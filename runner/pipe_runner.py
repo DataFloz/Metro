@@ -8,7 +8,7 @@ from pipeline_runner.container_runner import ContainerRunner
 from pipeline_runner.kubernetes_runner import KubernetesRunner
 
 
-def run_pipeline(pipelines: List[PipelineConfig], kafka_connector: ConnectorConfig, 
+def run_pipeline(pipelines: List[PipelineConfig], kafka_connector: ConnectorConfig,
                  pipeline_infrastructure_runner: PipelineInfrastructureRunner):
     ''' Run pipeline
         Args:
