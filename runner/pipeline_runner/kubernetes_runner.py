@@ -8,7 +8,7 @@ class KubernetesRunner(AbstractRunner):
     def __init__(self, kubernetes_runner_config: PipelineKubernetesRunner):
         super().__init__()
         self.config = kubernetes_runner_config
-        
+
         # Define the Kubernetes configuration.
         kubeconfig = {
             "apiVersion": "v1",
