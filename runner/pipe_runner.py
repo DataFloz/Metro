@@ -17,9 +17,9 @@ def run_pipeline(pipelines: List[PipelineConfig], kafka_connector: ConnectorConf
             pipeline_infrastructure_runner: PipelineInfrastructureRunner object'''
     pipeline_runner = None
     if isinstance(pipeline_infrastructure_runner, PipelineContainerRunner):
-        pipeline_runner = ContainerRunner()
+        pipeline_runner = ContainerRunner(pipeline_infrastructure_runner)
     elif isinstance(pipeline_infrastructure_runner, PipelineKubernetesRunner):
-        pipeline_runner = KubernetesRunner()
+        pipeline_runner = KubernetesRunner(pipeline_infrastructure_runner)
 
     for pipeline_config in pipelines:
         pipeline_runner.rollout(pipeline_config, kafka_connector)
