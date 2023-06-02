@@ -2,46 +2,48 @@ from kubernetes import client, config
 from pipeline_runner.abstract_runner import AbstractRunner
 from models.connector_cfg import ConnectorConfig
 from models.pipline.pipeline_config import PipelineConfig
-
-# Define the Kubernetes configuration.
-kubeconfig = {
-    "apiVersion": "v1",
-    "clusters": [
-        {
-            "cluster": {
-                "server": "https://my-kubernetes-cluster.example.com",
-                "certificate-authority-data": "<CA_CERT_DATA>",
-            },
-            "name": "my-kubernetes-cluster",
-        }
-    ],
-    "contexts": [
-        {
-            "context": {
-                "cluster": "my-kubernetes-cluster",
-                "user": "my-user",
-            },
-            "name": "my-context",
-        }
-    ],
-    "users": [
-        {
-            "name": "my-user",
-            "user": {
-                "client-certificate-data": "<CLIENT_CERT_DATA>",
-                "client-key-data": "<CLIENT_KEY_DATA>",
-            },
-        }
-    ],
-    "current-context": "my-context",
-}
+from models.infrastructure_runner.pipeline_kubernetes_runner import PipelineKubernetesRunner
 
 class KubernetesRunner(AbstractRunner):
-    def __init__(self):
+    def __init__(self, kubernetes_runner_config: PipelineKubernetesRunner):
         super().__init__()
+        self.config = kubernetes_runner_config
+        
+        # Define the Kubernetes configuration.
+        kubeconfig = {
+            "apiVersion": "v1",
+            "clusters": [
+                {
+                    "cluster": {
+                        "server": self.config.cluster_server,
+                        "certificate-authority-data": "<CA_CERT_DATA>",
+                    },
+                    "name": self.config.cluster_name,
+                }
+            ],
+            "contexts": [
+                {
+                    "context": {
+                        "cluster": "my-kubernetes-cluster",
+                        "user": self.config.context_user,
+                    },
+                    "name": self.config.context_name,
+                }
+            ],
+            "users": [
+                {
+                    "name": self.config.context_user,
+                    "user": {
+                        "client-certificate-data": "<CLIENT_CERT_DATA>",
+                        "client-key-data": "<CLIENT_KEY_DATA>",
+                    },
+                }
+            ],
+            "current-context": self.config.context_name,
+        }
+
         # Load the Kubernetes configuration.
-        # config.load_kube_config(config_dict=kubeconfig)
-        config.load_kube_config()
+        config.load_kube_config_from_dict(config_dict=kubeconfig)
         self.api = client.CoreV1Api()
 
     def rollout(self, pipeline_configuration: PipelineConfig, kafka_connector: ConnectorConfig):

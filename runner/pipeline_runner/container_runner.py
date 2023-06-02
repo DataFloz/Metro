@@ -3,11 +3,13 @@ from docker.errors import NotFound
 from pipeline_runner.abstract_runner import AbstractRunner
 from models.connector_cfg import ConnectorConfig
 from models.pipline.pipeline_config import PipelineConfig
+from models.infrastructure_runner.pipeline_container_runner import PipelineContainerRunner
 
 
 class ContainerRunner(AbstractRunner):
-    def __init__(self):
+    def __init__(self, container_runner_config: PipelineContainerRunner):
         super().__init__()
+        self.config = container_runner_config
         self.client = docker.from_env()
 
 
