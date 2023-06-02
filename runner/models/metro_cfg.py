@@ -37,7 +37,8 @@ class MetroConfig:
         connectors_config = \
                 [ConnectorConfig.from_config_dict(connector_dict=connector_yml)
                     for connector_yml in metro_dict['connectors']]
-        pipeline_infrastructure_runner = pipeline_infra_convert(metro_dict['running_infrastructure'])
+        pipeline_infrastructure_runner = \
+                                    pipeline_infra_convert(metro_dict['running_infrastructure'])
 
         metro_config = MetroConfig(metro_dict["name"], connectors_config,
                                         pipelines_config, pipeline_infrastructure_runner)

@@ -13,6 +13,10 @@ def from_config_dict(pipeline_infra_runner_dict):
     if pipeline_infra_runner_dict["infrustructure_type"]=='container':
         infra = PipelineContainerRunner()
     if pipeline_infra_runner_dict["infrustructure_type"]=='kubernetes':
-        infra = PipelineKubernetesRunner()
+        infra = PipelineKubernetesRunner(
+                        cluster_server=pipeline_infra_runner_dict["cluster_server"],
+                        cluster_name=pipeline_infra_runner_dict["cluster_name"],
+                        context_name=pipeline_infra_runner_dict["context_name"],
+                        context_user=pipeline_infra_runner_dict["context_user"])
 
     return infra
