@@ -1,1 +1,1 @@
-export const RUNNER_URL = process.env.RUNNER_URL || 'http://localhost:5000'
+export const RUNNER_URL = process.env.RUNNER_URL || 'http://localhost:5000';

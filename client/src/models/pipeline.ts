@@ -1,24 +1,28 @@
-export interface Pipeline{
+export interface Pipeline {
     name: string;
     input: InputModel;
     output: Output;
-    transformation: ContainerTransformation | HttpTransormation | SQLTransormation | PickleTransormation;
+    transformation:
+        | ContainerTransformation
+        | HttpTransormation
+        | SQLTransormation
+        | PickleTransormation;
 }
 
 export interface InputModel {
-    topic: string    
+    topic: string;
 }
 
 export interface Output {
-    topic: string
+    topic: string;
 }
-export type transformationType = 'http' | 'container' | 'sql' | 'pickle'
+export type transformationType = 'http' | 'container' | 'sql' | 'pickle';
 
 export interface transformation {
-    type: transformationType
+    type: transformationType;
 }
-export interface ContainerTransformation extends transformation {   
-    container_url: string
+export interface ContainerTransformation extends transformation {
+    container_url: string;
 }
 
 export interface HttpTransormation extends transformation {
