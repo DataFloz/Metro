@@ -1,9 +1,8 @@
 on: pull_request
-
+name: client-quality-gate
 jobs:
-  client-lint:
+  setup:
     runs-on: ubuntu-latest
-    name: Executes next-lint client
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -17,3 +16,21 @@ jobs:
         run: cd ./client && npm run lint
       - name: Build
         run: cd ./client && npm run build
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        run: cd ./client && npm run build
+  lint:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint
+        run: cd ./client && npm run lint
+  prettier:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prettier check
+        run: cd ./client && npx prettier -c .
