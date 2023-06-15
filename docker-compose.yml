@@ -5,6 +5,8 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - ./runner/cfg:/app/runner/cfg
     ports:
       - "5000:5000"
   zookeeper:
