@@ -1,7 +1,8 @@
 # DataFloz
 
-Metro is pipelines orchestrator platform for stream data.
-You can explore more in the [docs](https://datafloz.github.io/Metro-docs/).
+__Metro is pipelines orchestrator platform for stream data.__ <br/>
+
+You can explore more in the <a href="https://datafloz.github.io/Metro-docs/" target="_blank">docs!</a>.
 
 
 <img width="363" alt="image" src="https://user-images.githubusercontent.com/17068656/224840358-67270739-cca2-439d-9441-f239bfcef750.png">

@@ -1,9 +1,27 @@
 on: pull_request
-
+name: quality-gates
 jobs:
-  runner-lint:
+  client:
     runs-on: ubuntu-latest
-    name: Executes pylint runner
+    name: client-quality-gate
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Install Node.js dependencies
+        run: cd ./client && npm ci
+      - name: Build
+        run: cd ./client && npm run build
+      - name: Lint
+        run: cd ./client && npm run lint
+      - name: Prettier check
+        run: cd ./client && npm run prettier:check
+  runner:
+    runs-on: ubuntu-latest
+    name: runner-quality-gate
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.8
@@ -18,9 +36,9 @@ jobs:
           echo "PYTHON_PATH=./runner" >> $GITHUB_ENV
       - name: Analysing the code with pylint
         run: pylint ./runner
-  pipeline-lint:
+  pipeline:
     runs-on: ubuntu-latest
-    name: Executes pylint pipeline
+    name: pipeline-quality-gate
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.8
