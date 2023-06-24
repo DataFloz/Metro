@@ -1,3 +1,4 @@
+import ast
 import config as cfg
 from confluent_kafka import Consumer, KafkaError, KafkaException
 from utils.logger import logger
@@ -43,7 +44,8 @@ class KafkaConsumer:
                 else:
                     # msg_process(msg)
                     logger.debug("process message")
-                    results = self.transformer.run_logic(msg)
+                    message_value = self.get_message_value_as_dict(msg)
+                    results = self.transformer.run_logic(message_value)
                     logger.debug("produce message")
                     self.producer.produce(results)
                     logger.debug("end message pipeline")
@@ -53,3 +55,10 @@ class KafkaConsumer:
     def shutdown(self):
         '''Function shutdown the consumer if needed'''
         self.running = False
+
+    def get_message_value_as_dict(self, msg):
+        msg_value = msg.value()
+        encode_msg_value = msg_value.decode('utf-8')
+        message_data = ast.literal_eval(encode_msg_value)
+
+        return message_data

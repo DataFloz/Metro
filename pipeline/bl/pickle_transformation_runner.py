@@ -1,4 +1,3 @@
-import ast
 import pickle
 from utils.logger import logger
 from bl.transformer_runner_interface import TransforerRunnerInterface
@@ -11,14 +10,11 @@ class PickleTransformer(TransforerRunnerInterface):
 
     def run_logic(self, msg):
         logger.info("run the pickle transformer logic")
-        msg_value = msg.value()
-        encode_msg_value = msg_value.decode('utf-8')
-        message_data = ast.literal_eval(encode_msg_value)
 
         with open(f"/mnt/configs/{self.file_name}", 'rb') as file:
             model = pickle.load(file)
-            message_data["predict"] = model.predict(message_data)
+            msg["predict"] = model.predict(msg)
 
-        logger.debug("result of logic run: %s", message_data)
+        logger.debug("result of logic run: %s", msg)
 
-        return message_data
+        return msg
