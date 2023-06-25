@@ -61,4 +61,4 @@ jobs:
       - name: Install dependencies
         run: pip install -r tests/requirements.txt  # Replace with your requirements file if needed
       - name: Run unit tests
-        run: python -m unittest discover -v -s ".\tests" -p "*test.py"
+        run: python -m unittest discover -v -s "tests" -p "*test.py"
