@@ -53,3 +53,10 @@ jobs:
           echo "PYTHON_PATH=./pipeline" >> $GITHUB_ENV
       - name: Analysing the code with pylint
         run: pylint ./pipeline
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare repo
+        uses: actions/checkout@master
+      - name: Test
+        uses: onichandame/python-test-action@master
