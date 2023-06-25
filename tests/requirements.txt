@@ -1,0 +1,8 @@
+confluent-kafka
+docker
+requests
+pandas
+pyyaml
+docker
+flask
+kubernetes

@@ -53,3 +53,12 @@ jobs:
           echo "PYTHON_PATH=./pipeline" >> $GITHUB_ENV
       - name: Analysing the code with pylint
         run: pylint ./pipeline
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare repo
+        uses: actions/checkout@master
+      - name: Install dependencies
+        run: pip install -r tests/requirements.txt  # Replace with your requirements file if needed
+      - name: Run unit tests
+        run: python -m unittest discover -v -s "tests" -p "*test.py"
