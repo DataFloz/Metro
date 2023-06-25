@@ -1,8 +1,7 @@
 import sqlite3
-from utils.logger import logger
 import pandas as pd
 from bl.transformer_runner_interface import TransforerRunnerInterface
-
+from utils.logger import logger
 
 class SQLTransformer(TransforerRunnerInterface):
     '''Inhierent from TransforerRunnerInterface: responsible for SQL transformation.'''
