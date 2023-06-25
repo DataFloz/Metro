@@ -6,4 +6,3 @@ pyyaml
 docker
 flask
 kubernetes
-unittest
