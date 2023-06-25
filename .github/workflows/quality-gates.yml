@@ -61,4 +61,4 @@ jobs:
       - name: Test
         uses: onichandame/python-test-action@master
         with:
-          deps_list: './runner/requirements.txt, ./pipeline/requirements.txt'
+          deps_list: 'pipeline/requirements.txt'
