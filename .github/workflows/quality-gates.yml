@@ -58,7 +58,7 @@ jobs:
     steps:
       - name: Prepare repo
         uses: actions/checkout@master
-      - name: Test
-        uses: onichandame/python-test-action@master
-        with:
-          deps_list: 'pipeline/requirements.txt'
+      - name: Install dependencies
+        run: pip install -r requirements.txt  # Replace with your requirements file if needed
+      - name: Run unit tests
+        run: python -m unittest discover
