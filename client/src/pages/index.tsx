@@ -48,14 +48,14 @@ export default function Home() {
                         </Grid.Col>
                         <Grid.Col span={3} offset={1}>
                             <ConnectorsTable
-                                connectors={data.connectors}
+                                connector={data.connector}
                             ></ConnectorsTable>
                         </Grid.Col>
                         <Grid m={15}>
                             <Grid.Col span={1} offset={3}>
                                 <CreateTopics
                                     pipelines={data.pipelines}
-                                    kafkaConnector={data.connectors[0]}
+                                    kafkaConnector={data.connector}
                                 ></CreateTopics>
                             </Grid.Col>
                             <Grid.Col span={1} offset={5}>

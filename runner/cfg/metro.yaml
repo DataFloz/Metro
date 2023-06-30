@@ -1,8 +1,7 @@
 name: 'sample-config'
 running_infrastructure:
   infrustructure_type: container
-connectors:
-  -
+connector:
     name: 'local-kafka-connector'
     type: 'kafka'
     brokers: 'kafka:29092'
@@ -51,5 +50,32 @@ pipelines:
       topic: 'persons-with-ml'
     transformation:
       type: 'pickle'
-      file_name: 'test.pkl'
+      file_name: 'test.pkl'  
+  -
+    name: 'calculate-with-HTTP'
+    input:
+      type: 'kafka'
+      topic: 'persons-with-full-name'
+    output:
+      type: 'kafka'
+      topic: 'persons-with-http'
+    transformation:
+      type: 'http'
+      http_url: 'http://test-url/test'
+      headers:
+        - "authorization": "secret"
+        - "header-2": "some-header"
+      params:
+        - "param1": "value1"
+  -
+    name: 'calculate-with-container'
+    input:
+      type: 'kafka'
+      topic: 'persons-with-full-name'
+    output:
+      type: 'kafka'
+      topic: 'persons-with-container'
+    transformation:
+      type: 'container'
+      container-image: 'test-image-name:latest'
     

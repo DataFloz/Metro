@@ -18,8 +18,7 @@ def deploy_pipelines():
     pipelines_configuration = read_configuration_file()
 
     logger.info("run each pipeline with its configuration")
-    kafka_connector = next((connector for connector in
-                             pipelines_configuration.connectors if connector.type == 'kafka'), None)
+    kafka_connector = pipelines_configuration.connector
     run_pipeline(pipelines_configuration.pipelines, kafka_connector, pipelines_configuration.pipeline_infrastructure_runner)
 
     logger.info('end build and run pipelines')

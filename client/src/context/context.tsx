@@ -18,13 +18,11 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     const [config, setConfig] = React.useState<PipelineList>({
         name: '',
         pipelines: [],
-        connectors: [
-            {
-                name: '',
-                brokers: '',
-                group_id: '',
-            },
-        ],
+        connector: {
+            name: '',
+            brokers: '',
+            group_id: '',
+        },
     });
 
     const updateConfig = (config: PipelineList) => {
