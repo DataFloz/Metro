@@ -4,6 +4,7 @@ import sys
 sys.path.insert(0, './runner')
 from runner.models.metro_cfg import MetroConfig
 
+
 class ConfigurationConverterTest(unittest.TestCase):
     def test_metro_full(self):
         payload = {
@@ -11,14 +12,12 @@ class ConfigurationConverterTest(unittest.TestCase):
             "running_infrastructure": {
                 "infrustructure_type": 'container'
             },
-            "connectors": [
-                {
-                    "name": 'test-kafka-connector',
-                    "type": 'kafka',
-                    "brokers": 'kafka:29092',
-                    "group_id": 'some_group_id'
-                }
-            ],
+            "connector": {
+                "name": 'test-kafka-connector',
+                "type": 'kafka',
+                "brokers": 'kafka:29092',
+                "group_id": 'some_group_id'
+            },
             "pipelines": [
                 {
                     "name": 'test-pipeline',
@@ -38,19 +37,17 @@ class ConfigurationConverterTest(unittest.TestCase):
             ]
         }
 
-        expected =  {
+        expected = {
             "name": 'test-config',
             "pipeline_infrastructure_runner": {
                 "infrustructure_type": 'container'
             },
-            "connectors": [
-                {
-                    "name": 'test-kafka-connector',
-                    "type": 'kafka',
-                    "brokers": 'kafka:29092',
-                    "group_id": 'some_group_id'
-                }
-            ],
+            "connector": {
+                "name": 'test-kafka-connector',
+                "type": 'kafka',
+                "brokers": 'kafka:29092',
+                "group_id": 'some_group_id'
+            },
             "pipelines": [
                 {
                     "name": 'test-pipeline',
@@ -71,6 +68,7 @@ class ConfigurationConverterTest(unittest.TestCase):
         real = MetroConfig.from_config_dict(payload)
 
         self.assertEqual(real.as_dict().items(), expected.items())
-    
+
+
 if __name__ == '__main__':
     unittest.main()

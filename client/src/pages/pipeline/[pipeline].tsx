@@ -20,7 +20,7 @@ export default function Home() {
         )[0];
         const results = await axios.post('/api/transformed-messages', {
             pipeline: currentPipeline,
-            kafkaConnector: dataContext!.config.connectors[0],
+            kafkaConnector: dataContext!.config.connector,
         });
         setMessages(results.data.transformedMessages);
         open();
@@ -84,7 +84,7 @@ export default function Home() {
                             <ProduceTest
                                 pipeline={currentPipeline}
                                 kafkaConnector={
-                                    dataContext!.config.connectors[0]
+                                    dataContext!.config.connector
                                 }
                             ></ProduceTest>
                         </Grid.Col>

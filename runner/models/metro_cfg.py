@@ -8,10 +8,10 @@ from models.infrastructure_runner.pipeline_infra_runner_cfg_builder \
 
 class MetroConfig:
     '''Class represent the metro configuration'''
-    def __init__(self, name, connectors: List[ConnectorConfig], pipelines: List[PipelineConfig],
+    def __init__(self, name, connector: ConnectorConfig, pipelines: List[PipelineConfig],
                  pipeline_infrastructure_runner: PipelineInfrastructureRunner):
         self.name = name
-        self.connectors = connectors
+        self.connector = connector
         self.pipelines = pipelines
         self.pipeline_infrastructure_runner = pipeline_infrastructure_runner
 
@@ -19,7 +19,7 @@ class MetroConfig:
         '''Function for convert config to dict'''
         return {
             'name': self.name,
-            'connectors': [connector.as_dict() for connector in  self.connectors],
+            'connector': self.connector.as_dict(),
             'pipelines': [pipeline.as_dict() for pipeline in  self.pipelines],
             'pipeline_infrastructure_runner': self.pipeline_infrastructure_runner.as_dict()
         }
@@ -34,13 +34,12 @@ class MetroConfig:
         pipelines_config = \
                 [PipelineConfig.from_config_dict(pipeline_dict=pipeline_yml)
                     for pipeline_yml in metro_dict['pipelines']]
-        connectors_config = \
-                [ConnectorConfig.from_config_dict(connector_dict=connector_yml)
-                    for connector_yml in metro_dict['connectors']]
+        connector_config = \
+                ConnectorConfig.from_config_dict(connector_dict=metro_dict['connector'])
         pipeline_infrastructure_runner = \
                                     pipeline_infra_convert(metro_dict['running_infrastructure'])
 
-        metro_config = MetroConfig(metro_dict["name"], connectors_config,
+        metro_config = MetroConfig(metro_dict["name"], connector_config,
                                         pipelines_config, pipeline_infrastructure_runner)
 
         return metro_config
