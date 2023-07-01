@@ -17,9 +17,9 @@ export default function PipelinesTable({ connector }: TableProps) {
             defaultValue="customization"
         >
             <Accordion.Item value="customization" key={connector.name}>
-                <Accordion.Control>Kafka Connector</Accordion.Control>
+                <Accordion.Control>Connector</Accordion.Control>
                 <Accordion.Panel>
-                    {connector.name}, {connector.brokers} | {connector.group_id}
+                    {connector.name} ({connector.type}), {connector.brokers} | {connector.group_id}
                 </Accordion.Panel>
             </Accordion.Item>
         </Accordion>
