@@ -1,5 +1,6 @@
 from typing import List
-from models.connector_cfg import ConnectorConfig
+from models.connector.connector_cfg import ConnectorConfig
+from models.connector.connector_cfg_builder import from_config_dict as pipeline_connector_convert
 from models.pipline.pipeline_config import PipelineConfig
 from models.infrastructure_runner.pipeline_infrastructure_runner \
     import PipelineInfrastructureRunner
@@ -35,7 +36,7 @@ class MetroConfig:
                 [PipelineConfig.from_config_dict(pipeline_dict=pipeline_yml)
                     for pipeline_yml in metro_dict['pipelines']]
         connector_config = \
-                ConnectorConfig.from_config_dict(connector_dict=metro_dict['connector'])
+                pipeline_connector_convert(connector_dict=metro_dict['connector'])
         pipeline_infrastructure_runner = \
                                     pipeline_infra_convert(metro_dict['running_infrastructure'])
 
