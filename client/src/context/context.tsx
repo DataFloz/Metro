@@ -20,6 +20,7 @@ const DataProvider = ({ children }: Props): JSX.Element => {
         pipelines: [],
         connector: {
             name: '',
+            type: '',
             brokers: '',
             group_id: '',
         },
