@@ -1,6 +1,6 @@
 from kubernetes import client, config
 from pipeline_runner.abstract_runner import AbstractRunner
-from models.connector_cfg import ConnectorConfig
+from models.connector.connector_cfg import ConnectorConfig
 from models.pipline.pipeline_config import PipelineConfig
 from models.infrastructure_runner.pipeline_kubernetes_runner import PipelineKubernetesRunner
 
@@ -46,7 +46,7 @@ class KubernetesRunner(AbstractRunner):
         config.load_kube_config_from_dict(config_dict=kubeconfig)
         self.api = client.CoreV1Api()
 
-    def rollout(self, pipeline_configuration: PipelineConfig, kafka_connector: ConnectorConfig):
+    def rollout(self, pipeline_configuration: PipelineConfig, connector: ConnectorConfig):
         # create a container with environment variables
         container = client.V1Container(
             name="my-container",
