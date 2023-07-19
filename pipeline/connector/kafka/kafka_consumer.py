@@ -1,33 +1,35 @@
 import ast
-import config as cfg
 from confluent_kafka import Consumer, KafkaError, KafkaException
 from utils.logger import logger
 from bl.transformer_runner_interface import TransforerRunnerInterface
-from kafka.producer import KafkaProducer
+from connector.producer import AbstractProducer
+from connector.consumer import AbstractConsumer
 
-class KafkaConsumer:
+class KafkaConsumer(AbstractConsumer):
     '''Class responsible of consumning and creating kafka consumer.'''
-    def __init__(self, trasformer: TransforerRunnerInterface, producer: KafkaProducer):
-        logger.info(f"connect to: {cfg.kafka_config['bootstrap.servers']}")
+    def __init__(self, trasformer: TransforerRunnerInterface, producer: AbstractProducer, configuration: dict):
+        logger.info(f"connect to: {configuration['bootstrap.servers']}")
         conf = {
-            'bootstrap.servers': cfg.kafka_config['bootstrap.servers'],
-            'group.id': cfg.kafka_config['group.id'],
+            'bootstrap.servers': configuration['bootstrap.servers'],
+            'group.id': configuration['group.id'],
             'auto.offset.reset': 'latest'
         }
+
+        self.topics = configuration['topics']
 
         self.consumer = Consumer(conf)
         self.transformer = trasformer
         self.producer = producer
         self.running = False
 
-    def consume(self, topics):
+    def consume(self):
         '''Function start the consuming
             Args:
                 topic: string array of the topic to consume'''
-        logger.info("start consume topics: %s", topics)
+        logger.info("start consume topics: %s", self.topics)
         self.running = True
         try:
-            self.consumer.subscribe(topics)
+            self.consumer.subscribe(self.topics)
 
             while self.running:
                 msg = self.consumer.poll(timeout=1.0)

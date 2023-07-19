@@ -1,28 +1,17 @@
 import json
-from utils.logger import logger
 from confluent_kafka import Producer
+from connector.producer import AbstractProducer
 import config as cfg
 
-class KafkaProducer():
+class KafkaProducer(AbstractProducer):
     '''Class responsible of producing and creating kafka prooducer.'''
-    def __init__(self, topic):
+    def __init__(self, configuration: dict):
         conf = {
             'bootstrap.servers': cfg.kafka_config['bootstrap.servers'] 
         }
 
         self.producer = Producer(conf)
-        self.topic = topic
-
-
-    def produced_callback(self, err, msg):
-        '''Callback after produce
-            Args:
-                err: if the produce failed
-                msg: the msg that produced'''
-        if err is not None:
-            logger.error("Failed to deliver message: %s:%s", str(msg), str(err))
-        else:
-            logger.error("Message produced: %s", str(msg))
+        self.topic = configuration['topic']
 
     def produce(self, values):
         '''Function produce msg
