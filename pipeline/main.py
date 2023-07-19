@@ -1,15 +1,14 @@
 from utils.logger import logger
-from config import kafka_input_topic, kafka_output_topic
-from kafka.consumer import KafkaConsumer
-from kafka.producer import KafkaProducer
+from connector.consumer_builder import build_consumer
+from connector.producer_builder import build_producer
 from bl.transformation_builder import build_transformation
 
 def main():
     ''' The main function is the pipeline entrypoint. '''
     logger.info("starting pipeline")
     transformer = build_transformation()
-    producer = KafkaProducer(kafka_output_topic)
-    consumer = KafkaConsumer(transformer, producer)
-    consumer.consume([kafka_input_topic])
+    producer = build_producer()
+    consumer = build_consumer(transformer, producer)
+    consumer.consume()
 
 main()
