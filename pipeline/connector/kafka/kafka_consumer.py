@@ -7,7 +7,8 @@ from connector.consumer import AbstractConsumer
 
 class KafkaConsumer(AbstractConsumer):
     '''Class responsible of consumning and creating kafka consumer.'''
-    def __init__(self, trasformer: TransforerRunnerInterface, producer: AbstractProducer, configuration: dict):
+    def __init__(self, trasformer: TransforerRunnerInterface, producer: AbstractProducer,
+                  configuration: dict):
         logger.info(f"connect to: {configuration['bootstrap.servers']}")
         conf = {
             'bootstrap.servers': configuration['bootstrap.servers'],

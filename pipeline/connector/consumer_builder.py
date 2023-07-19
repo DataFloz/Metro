@@ -5,7 +5,11 @@ from connector.kafka.kafka_consumer import KafkaConsumer
 from connector.producer import AbstractProducer
 from bl.transformer_runner_interface import TransforerRunnerInterface
 
-def build_consumer(transformer: TransforerRunnerInterface, producer: AbstractProducer) -> AbstractConsumer:
+def build_consumer(transformer: TransforerRunnerInterface, producer: AbstractProducer) \
+      -> AbstractConsumer:
+    '''Function build the consumer object
+        return:
+            AbstractConsumer for the relant environment connector'''
     consumer_type = os.environ.get('type')
     if consumer_type == 'kafka':
         kafka_config = {
@@ -14,5 +18,3 @@ def build_consumer(transformer: TransforerRunnerInterface, producer: AbstractPro
             'topics': [ast.literal_eval(os.environ.get('input'))['topic']]
         }
         return KafkaConsumer(transformer, producer, kafka_config)
-    else:
-        return None

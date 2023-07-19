@@ -20,4 +20,3 @@ class AbstractProducer():
         '''Function produce msg
             Args:
                 values: the values that will be produce'''
-        pass

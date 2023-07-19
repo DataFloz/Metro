@@ -1,13 +1,18 @@
 import ast
 import os
-from connector.kafka.kafka_producer import KafkaProducer 
+from connector.kafka.kafka_producer import KafkaProducer
 from connector.producer import AbstractProducer
 
 def build_producer() -> AbstractProducer:
+    '''Function build the producer object
+        return:
+            AbstractProducer for the relant environment connector'''
+
     producer_type = os.environ.get('type')
     if producer_type == 'kafka':
-        kafka_output_topic = ast.literal_eval(os.environ.get('output'))['topic']
+        kafka_config = {
+            'bootstrap.servers': os.environ.get('brokers'),
+            'topic': ast.literal_eval(os.environ.get('output'))['topic']
+        }
 
-        return KafkaProducer({'topic': kafka_output_topic})
-    else:
-        return None
+        return KafkaProducer(kafka_config)
