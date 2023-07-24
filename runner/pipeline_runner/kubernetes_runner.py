@@ -48,12 +48,16 @@ class KubernetesRunner(AbstractRunner):
 
     def rollout(self, pipeline_configuration: PipelineConfig, connector: ConnectorConfig):
         # create a container with environment variables
+
+        envs_dict = pipeline_configuration.as_dict()
+        envs_dict.update(connector.as_dict())
+
         container = client.V1Container(
             name="my-container",
             image="my-image:latest",
             image_pull_policy="Never",
             env=[
-                client.V1EnvVar(name="MY_ENV_VAR", value="my value"),
+                client.V1EnvVar(name=env_key, value=env_value) for env_key, env_value in envs_dict.items()
             ]
         )
 
