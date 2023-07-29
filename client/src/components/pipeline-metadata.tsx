@@ -67,20 +67,22 @@ export default function PipelineMetadata({pipeline, connector}: IProps) {
             {pipeline ? (
                 <>
                     {iterate(pipeline)}
-                    <Accordion
-                        title="Connector"
-                        variant="filled"
-                        radius="md"
-                        chevronPosition="left"
-                        defaultValue="customization"
-                    >
-                        <Accordion.Item value="customization" key={connector.name}>
-                            <Accordion.Control>Pipeline offsets</Accordion.Control>
-                            <Accordion.Panel>
-                                {data.pipelineMetadata.topicOffsets}
-                            </Accordion.Panel>
-                        </Accordion.Item>
-                    </Accordion>
+                    {data && data.pipelineMetadata && (
+                        <Accordion
+                            title="Connector"
+                            variant="filled"
+                            radius="md"
+                            chevronPosition="left"
+                            defaultValue="customization"
+                        >
+                            <Accordion.Item value="customization" key={connector.name}>
+                                <Accordion.Control>Pipeline offsets</Accordion.Control>
+                                <Accordion.Panel>
+                                    {data.pipelineMetadata.topicOffsets}
+                                </Accordion.Panel>
+                            </Accordion.Item>
+                        </Accordion>
+                    )}
                 </>
             ) : (
                 ''
