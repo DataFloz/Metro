@@ -5,6 +5,17 @@ from pipe_runner import run_pipeline
 
 app = Flask(__name__)
 
+
+@app.route('/api/pipelines/<name>')
+def get_pipeline(name):
+    '''Route for getting the metro configuration as json.'''
+    metro_configuration = read_configuration_file()
+    specificPipeline = next(iter(filter(lambda pipeline: pipeline.name == name,  metro_configuration.pipelines)), None)
+    metro_configuration.pipelines = [specificPipeline]
+    resultDict = metro_configuration.as_dict()
+
+    return jsonify(resultDict)
+
 @app.route('/api/pipelines')
 def get_pipelines():
     '''Route for getting the metro configuration as json.'''

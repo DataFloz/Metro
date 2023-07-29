@@ -7,7 +7,13 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<PipelineList>
 ) {
-    const runnerPipelines = await axios.get(`${RUNNER_URL}/api/pipelines`);
+    const pipelineQuery = req.query['pipeline'];
+    let runnerPipelines = null;
 
+    if(pipelineQuery)
+        runnerPipelines = await axios.get(`${RUNNER_URL}/api/pipelines/${pipelineQuery}`);
+    else
+        runnerPipelines = await axios.get(`${RUNNER_URL}/api/pipelines`);
+        
     res.status(200).json(runnerPipelines.data);
 }
