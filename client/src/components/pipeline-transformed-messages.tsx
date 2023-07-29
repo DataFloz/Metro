@@ -1,7 +1,7 @@
-import { Pipeline } from '../../models/pipeline';
 import { Table } from '@mantine/core';
 import useAxios from 'axios-hooks';
 import { Connector } from '@/models/connector';
+import { Pipeline } from '@/models/pipeline';
 
 interface IProps {
     pipeline: Pipeline;

@@ -5,9 +5,8 @@ import { Button, Drawer, Input, Table } from '@mantine/core';
 import { Grid } from '@mantine/core';
 import ProduceTest from '@/components/test-message-dialog';
 import { useDisclosure } from '@mantine/hooks';
-import axios from 'axios';
-import { useState } from 'react';
 import useAxios from 'axios-hooks';
+import PipelineTransformMessages from '@/components/pipeline-transformed-messages';
 
 export default function Home() {
     const router = useRouter();
@@ -16,8 +15,6 @@ export default function Home() {
     const dataContext = useDataContext();
 
     const [messagesDrawerOpened, { open, close }] = useDisclosure(false);
-
-    const [messages, setMessages] = useState([]);
 
     const [{ data, loading, error }] = useAxios<any>({
         url: '/api/pipeline-metadata',
@@ -28,14 +25,6 @@ export default function Home() {
     });
 
     const onOpenMessagesDrawer = async () => {
-        let currentPipeline = dataContext?.config.pipelines.filter(
-            (pipe) => pipe.name === pipeline
-        )[0];
-        const results = await axios.post('/api/transformed-messages', {
-            pipeline: currentPipeline,
-            kafkaConnector: dataContext!.config.connector,
-        });
-        setMessages(results.data.transformedMessages);
         open();
     };
 
@@ -113,12 +102,9 @@ export default function Home() {
                         title="Transformed messages"
                     >
                         <Table>
-                            {messages.map((m: any) => (
-                                <tr key={m.timestamp}>
-                                    <td>{m.timestamp}</td>
-                                    <td>{m.value}</td>
-                                </tr>
-                            ))}
+                            <PipelineTransformMessages 
+                                pipeline={currentPipeline}
+                                connector={dataContext!.config.connector} />
                         </Table>
                     </Drawer>
                 </>
