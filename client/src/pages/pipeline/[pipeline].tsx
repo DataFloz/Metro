@@ -7,12 +7,25 @@ import ProduceTest from '@/components/test-message-dialog';
 import { useDisclosure } from '@mantine/hooks';
 import axios from 'axios';
 import { useState } from 'react';
+import useAxios from 'axios-hooks';
 
 export default function Home() {
     const router = useRouter();
     const { pipeline } = router.query;
+    
+    const dataContext = useDataContext();
+
     const [messagesDrawerOpened, { open, close }] = useDisclosure(false);
+
     const [messages, setMessages] = useState([]);
+
+    const [{ data, loading, error }] = useAxios<any>({
+        url: '/api/pipeline-metadata',
+        method: 'post',
+        data: { pipeline: dataContext?.config.pipelines.filter((pipe) => pipe.name === pipeline)[0],
+            kafkaConnector: dataContext!.config.connector
+        }
+    });
 
     const onOpenMessagesDrawer = async () => {
         let currentPipeline = dataContext?.config.pipelines.filter(
@@ -35,7 +48,6 @@ export default function Home() {
             </div>
         );
     };
-    const dataContext = useDataContext();
     const iterate = (pipeline: Pipeline) => {
         return Object.entries(pipeline).map(([key, value]) => {
             console.log('key', key);
@@ -93,6 +105,7 @@ export default function Home() {
                                 Show transfomed messages
                             </Button>
                         </Grid.Col>
+                        {data}
                     </Grid>
                     <Drawer
                         opened={messagesDrawerOpened}
