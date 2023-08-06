@@ -81,6 +81,12 @@ export default function PipelineMetadata({pipeline, connector}: IProps) {
                                     {data.pipelineMetadata.topicOffsets}
                                 </Accordion.Panel>
                             </Accordion.Item>
+                            <Accordion.Item value="customization" key={connector.name}>
+                                <Accordion.Control>last item time</Accordion.Control>
+                                <Accordion.Panel>
+                                    {data.pipelineMetadata.msg.timestamp}
+                                </Accordion.Panel>
+                            </Accordion.Item>
                         </Accordion>
                     )}
                 </>

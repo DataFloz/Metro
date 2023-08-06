@@ -30,7 +30,7 @@ const getPipelineMetadata = async (pipeline: Pipeline, connector: Connector) => 
                     eachBatchAutoResolve: false,
                     autoCommit: false,
                     eachMessage: async ({ topic,partition, message}) => {
-                        latestMsgTime = message.timestamp;
+                        console.log(message)
                         resolve({msg: message, topicOffsets: topicOffsets});
                     }
                 })
@@ -61,7 +61,7 @@ export default async function handler(
             consumer = null;
         }
 
-        res.status(200).json({ pipelineMetadata: getPipelineMetadata });
+        res.status(200).json({ pipelineMetadata: metadata });
     } else {
         res.status(405);
     }
