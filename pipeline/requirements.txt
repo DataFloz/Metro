@@ -2,3 +2,4 @@ confluent-kafka
 docker
 requests
 pandas
+redis

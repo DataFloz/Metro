@@ -2,6 +2,7 @@ import ast
 import os
 from connector.consumer import AbstractConsumer
 from connector.kafka.kafka_consumer import KafkaConsumer
+from connector.redis.redis_consumer import RedisConsumer
 from connector.producer import AbstractProducer
 from bl.transformer_runner_interface import TransforerRunnerInterface
 
@@ -18,3 +19,10 @@ def build_consumer(transformer: TransforerRunnerInterface, producer: AbstractPro
             'topics': [ast.literal_eval(os.environ.get('input'))['topic']]
         }
         return KafkaConsumer(transformer, producer, kafka_config)
+    elif consumer_type == 'redis':
+        redis_config = {
+            'host': os.environ.get('host'),
+            'port': os.environ.get('port'),
+            'topic': ast.literal_eval(os.environ.get('input'))['topic']
+        }
+        return RedisConsumer(transformer, producer, redis_config)
