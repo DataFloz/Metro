@@ -1,4 +1,4 @@
-import { Connector } from '@/models/connector';
+import { Connector, KafkaConnector, RedisConnector } from '@/models/connector';
 import { Accordion } from '@mantine/core';
 
 interface TableProps {
@@ -19,7 +19,11 @@ export default function PipelinesTable({ connector }: TableProps) {
             <Accordion.Item value="customization" key={connector.name}>
                 <Accordion.Control>Connector</Accordion.Control>
                 <Accordion.Panel>
-                    {connector.name} ({connector.type}), {connector.brokers} | {connector.group_id}
+                    {connector.name} ({connector.type}),
+                    {connector.type == 'kafka' ?
+                        `${(connector as KafkaConnector).brokers} | ${(connector as KafkaConnector).group_id}`
+                        : `${(connector as RedisConnector).host} | ${(connector as RedisConnector).port}`
+                    }
                 </Accordion.Panel>
             </Accordion.Item>
         </Accordion>
