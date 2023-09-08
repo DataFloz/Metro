@@ -1,11 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Pipeline } from '@/models/pipeline';
-import { Connector, KafkaConnector } from '@/models/connector';
-import { produceTest } from '@/tools/kafka';
-
-const kafkaHandler = async (connector: KafkaConnector, pipeline: Pipeline, message: string) => {
-    await produceTest(connector, pipeline, message);
-}
+import { Connector, KafkaConnector, RedisConnector } from '@/models/connector';
+import { produceTest as kafkaHandler } from '@/tools/kafka';
+import { produceTest as redisHandler } from '@/tools/redis';
 
 export default async function handler(
     req: NextApiRequest,
@@ -19,6 +16,8 @@ export default async function handler(
 
         if (connector.type === 'kafka') {
             await kafkaHandler(connector as KafkaConnector, pipeline, message);
+        }else if(connector.type === 'redis'){
+            await redisHandler(connector as RedisConnector, pipeline, message);
         }
 
         res.status(200).json({ result: 'succeed' });
