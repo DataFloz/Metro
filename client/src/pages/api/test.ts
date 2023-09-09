@@ -1,7 +1,8 @@
-import { Kafka } from 'kafkajs';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Pipeline } from '@/models/pipeline';
-import { Connector } from '@/models/connector';
+import { Connector, KafkaConnector, RedisConnector } from '@/models/connector';
+import { produceTest as kafkaHandler } from '@/tools/kafka';
+import { produceTest as redisHandler } from '@/tools/redis';
 
 export default async function handler(
     req: NextApiRequest,
@@ -13,19 +14,11 @@ export default async function handler(
         const message = req.body.message;
         console.log(connector);
 
-        // Create the client with the broker list
-        const kafka = new Kafka({
-            clientId: 'test-client',
-            brokers: [...connector.brokers.split(',')],
-        });
-
-        const producer = kafka.producer();
-
-        await producer.connect();
-        await producer.send({
-            topic: pipeline.input.topic,
-            messages: [{ key: 'test-key', value: message }],
-        });
+        if (connector.type === 'kafka') {
+            await kafkaHandler(connector as KafkaConnector, pipeline, message);
+        }else if(connector.type === 'redis'){
+            await redisHandler(connector as RedisConnector, pipeline, message);
+        }
 
         res.status(200).json({ result: 'succeed' });
     } else {

@@ -1,8 +1,8 @@
-import { Connector } from './connector';
+import { KafkaConnector, RedisConnector } from './connector';
 import { Pipeline } from './pipeline';
 
 export interface PipelineList {
     name: string;
     pipelines: Pipeline[];
-    connector: Connector;
+    connector: RedisConnector | KafkaConnector;
 }

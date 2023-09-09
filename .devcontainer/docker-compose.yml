@@ -12,7 +12,15 @@ services:
       - ../..:/workspaces:cached
     # Overrides default command so things don't shut down after the process ends.
     entrypoint: /usr/local/share/docker-init.sh
-    command: sleep infinity 
+    command: sleep infinity
+  redis:
+    hostname: redis
+    image: redis
+    command: redis-server --include /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
   zookeeper:
     image: wurstmeister/zookeeper
     ports:
